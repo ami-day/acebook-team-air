@@ -31,7 +31,7 @@ const Feed = ({ navigate }) => {
       return(
         <>
           <h2>Posts</h2>
-            <button onClick={logout}>
+            <button className="btn btn-primary" onClick={logout}>
               Logout
             </button>
           <div id='feed' role="feed">

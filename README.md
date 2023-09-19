@@ -10,7 +10,7 @@ In this project, you are tasked with working on an existing application. A signi
 
 ## Card wall
 
-REPLACE THIS TEXT WITH A LINK TO YOUR CARD WALL
+[Trello Board can be found here](https://trello.com/b/BxeQZLmW/team-air-acebook-project)
 
 ## Quickstart
 
