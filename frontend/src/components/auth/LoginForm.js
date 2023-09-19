@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 const LogInForm = ({ navigate }) => {
   const [email, setEmail] = useState("");
@@ -35,14 +36,11 @@ const LogInForm = ({ navigate }) => {
   };
 
   return (
-    <div className="min-vh-100 d-flex align-items-center">
-      <form
-        className="container col-3 login-form rounded-4 p-3"
-        onSubmit={handleSubmit}
-      >
+    <div className="container min-vh-100 d-flex justify-content-center align-items-center p-4">
+      <form id="login-form" className="rounded-4 p-3" onSubmit={handleSubmit}>
         <div className="mb-3">
           <h1 className="text-center">Login</h1>
-          <label for="exampleInputEmail1" className="form-label">
+          <label htmlFor="email" className="form-label">
             Email address
           </label>
           <input
@@ -56,7 +54,7 @@ const LogInForm = ({ navigate }) => {
           />
         </div>
         <div className="mb-3">
-          <label for="exampleInputPassword1" className="form-label">
+          <label htmlFor="password" className="form-label">
             Password
           </label>
           <input
@@ -68,10 +66,17 @@ const LogInForm = ({ navigate }) => {
             onChange={handlePasswordChange}
           />
         </div>
-        <div className="d-flex justify-content-center">
-          <button type="submit" id="submit" className="btn btn-primary w-50">
+        <div className="text-center">
+          <button
+            type="submit"
+            id="submit"
+            className="btn btn-success mb-2 px-5"
+          >
             Login
           </button>
+          <p>
+            No account? <Link to="/signup">Signup here</Link>
+          </p>
         </div>
       </form>
     </div>

@@ -32,17 +32,19 @@ const Feed = ({ navigate }) => {
     return (
       <>
         <Navbar onLogout={logout} />
-        <div>
-          <PostForm token={token}></PostForm>
-        </div>
-        <div>
-          <h2>Posts</h2>
-          <div id="feed" role="feed">
-            {posts.map((post) => (
-              <Post post={post} key={post._id} />
-            ))}
+        <main>
+          <div>
+            <PostForm token={token}></PostForm>
           </div>
-        </div>
+          <div>
+            <h2>Posts</h2>
+            <div id="feed" role="feed">
+              {posts.map((post) => (
+                <Post post={post} key={post._id} />
+              ))}
+            </div>
+          </div>
+        </main>
       </>
     );
   } else {
