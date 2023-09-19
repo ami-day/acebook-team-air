@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Post from '../post/Post'
+import PostForm from '../post/PostForm'
 
 const Feed = ({ navigate }) => {
   const [posts, setPosts] = useState([]);
@@ -21,7 +22,6 @@ const Feed = ({ navigate }) => {
     }
   }, [])
     
-
   const logout = () => {
     window.localStorage.removeItem("token")
     navigate('/login')
@@ -30,6 +30,10 @@ const Feed = ({ navigate }) => {
     if(token) {
       return(
         <>
+        <div>
+          <PostForm token={token}></PostForm>
+        </div>
+        <div>
           <h2>Posts</h2>
             <button className="btn btn-primary" onClick={logout}>
               Logout
@@ -38,6 +42,7 @@ const Feed = ({ navigate }) => {
               {posts.map(
                 (post) => ( <Post post={ post } key={ post._id } /> )
               )}
+          </div>
           </div>
         </>
       )
