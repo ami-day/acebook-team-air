@@ -7,8 +7,23 @@ const PostsController = {
       if (err) {
         throw err;
       }
-      const token = TokenGenerator.jsonwebtoken(req.user_id)
-      res.status(200).json({ posts: posts, token: token });
+      const token = TokenGenerator.jsonwebtoken(req.user_id);
+
+      // posts[0].comments = [
+      //   {
+      //     _id: 1234,
+      //     content: "This is a comment",
+      //   },
+      //   {
+      //     _id: 6547,
+      //     content: "This is another comment I made",
+      //   },
+      // ];
+
+      res.status(200).json({
+        posts: posts,
+        token: token,
+      });
     });
   },
   Create: (req, res) => {
@@ -18,8 +33,8 @@ const PostsController = {
         throw err;
       }
 
-      const token = TokenGenerator.jsonwebtoken(req.user_id)
-      res.status(201).json({ message: 'OK', token: token });
+      const token = TokenGenerator.jsonwebtoken(req.user_id);
+      res.status(201).json({ message: "OK", token: token });
     });
   },
 };
