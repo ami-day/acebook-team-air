@@ -12,7 +12,7 @@ const PostForm = ({ token }) => {
 
     if (token) {
       fetch("/posts", {
-        method: "post",
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
@@ -20,6 +20,7 @@ const PostForm = ({ token }) => {
         body: JSON.stringify({ message: message }),
       }).then((response) => {
         if (response.status === 201) {
+          window.location.reload();
           console.log("Post successfully added");
         } else {
           console.log("Post not successfully added");
@@ -32,7 +33,8 @@ const PostForm = ({ token }) => {
 
   return (
     <form
-      className="container col-3 login-form rounded-4 p-3"
+      id="post-form"
+      className="rounded-4 p-3 mx-auto"
       onSubmit={handleSubmitPost}
     >
       <div className="mb-3">

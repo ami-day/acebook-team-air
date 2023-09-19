@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 
 const Comment = ({ comment }) => {
   return (
     <div>
-      <h3>User who made comment</h3>
+      <h5>{comment.user?.email}</h5>
       <p>{comment.content}</p>
     </div>
   );

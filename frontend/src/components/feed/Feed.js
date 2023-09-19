@@ -34,14 +34,14 @@ const Feed = ({ navigate }) => {
       <>
         <Navbar onLogout={logout} />
         <main>
-          <div>
+          <div className="mb-5">
             <PostForm token={token}></PostForm>
           </div>
           <div>
-            <h2>Posts</h2>
-            <div id="feed" role="feed">
+            <h2 className="text-center">Posts</h2>
+            <div id="feed" role="feed" className="container">
               {posts.map((post) => (
-                <Post post={post} key={post._id} />
+                <Post post={post} key={post._id} token={token} />
               ))}
             </div>
           </div>

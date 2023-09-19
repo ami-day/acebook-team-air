@@ -1,7 +1,11 @@
 const mongoose = require("mongoose");
 
 const CommentSchema = new mongoose.Schema({
-  content: String,
+  content: { type: String, required: true },
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+  },
 });
 
 const Comment = mongoose.model("Comment", CommentSchema);
