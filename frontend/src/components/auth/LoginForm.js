@@ -37,7 +37,11 @@ const LogInForm = ({ navigate }) => {
 
   return (
     <div className="container min-vh-100 d-flex justify-content-center align-items-center p-4">
-      <form id="login-form" className="rounded-4 p-3" onSubmit={handleSubmit}>
+      <form
+        id="login-form"
+        className="rounded-4 py-3 px-5"
+        onSubmit={handleSubmit}
+      >
         <div className="mb-3">
           <h1 className="text-center">Login</h1>
           <label htmlFor="email" className="form-label">

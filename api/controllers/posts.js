@@ -3,13 +3,29 @@ const TokenGenerator = require("../lib/token_generator");
 
 const PostsController = {
   Index: (req, res) => {
-    Post.find((err, posts) => {
-      if (err) {
-        throw err;
-      }
-      const token = TokenGenerator.jsonwebtoken(req.user_id)
-      res.status(200).json({ posts: posts, token: token });
-    });
+    Post.find()
+      .populate([
+        "comments",
+        {
+          path: "comments",
+          populate: {
+            path: "user",
+            model: "User",
+            select: "email",
+          },
+        },
+      ])
+      .exec((err, posts) => {
+        if (err) {
+          throw err;
+        }
+        const token = TokenGenerator.jsonwebtoken(req.user_id);
+
+        res.status(200).json({
+          posts: posts,
+          token: token,
+        });
+      });
   },
   Create: (req, res) => {
     const post = new Post(req.body);
@@ -18,8 +34,8 @@ const PostsController = {
         throw err;
       }
 
-      const token = TokenGenerator.jsonwebtoken(req.user_id)
-      res.status(201).json({ message: 'OK', token: token });
+      const token = TokenGenerator.jsonwebtoken(req.user_id);
+      res.status(201).json({ message: "OK", token: token });
     });
   },
 };
