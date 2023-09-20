@@ -4,7 +4,9 @@ import { Link } from "react-router-dom";
 const SignUpForm = ({ navigate }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
+  const [username, setUsername] = useState("");
+  const [photo, setPhoto] = useState("");
+  
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -31,10 +33,46 @@ const SignUpForm = ({ navigate }) => {
     setPassword(event.target.value);
   };
 
+  const handleNameChange = (event) => {
+    setUsername(event.target.value);
+  };  
+
+  const handlePhotoChange = (event) => {
+    setPhoto(event.target.value);
+  };   
+
   return (
     <div className="container min-vh-100 d-flex justify-content-center align-items-center p-4">
       <form id="signup-form" className="rounded-4 p-3" onSubmit={handleSubmit}>
         <h1 className="text-center">Signup</h1>
+        <div className="mb-3">
+          <label htmlFor="username" className="form-label">
+            Username
+          </label>
+          <input
+            type="text"
+            className="form-control"
+            id="username"
+            value={username}
+            onChange={handleNameChange}
+            placeholder="Username"
+            autoComplete="off"
+          />
+        </div>
+        <div className="mb-3">
+          <label htmlFor="photo" className="form-label">
+            photoURL
+          </label>
+          <input
+            type="text"
+            className="form-control"
+            id="photo"
+            value={photo}
+            onChange={handleNameChange}
+            placeholder="photoURL"
+            autoComplete="off"
+          />
+        </div>
         <div className="mb-3">
           <label htmlFor="email" className="form-label">
             Email address
