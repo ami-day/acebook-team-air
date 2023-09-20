@@ -11,7 +11,7 @@ const PostsController = {
           populate: {
             path: "user",
             model: "User",
-            select: "email",
+            select: "username",
           },
         },
         {
@@ -19,7 +19,7 @@ const PostsController = {
           populate: {
             path: "user",
             model: "User",
-            select: "email",
+            select: "username",
           },
         },
       ])
@@ -37,7 +37,7 @@ const PostsController = {
   },
   Create: (req, res) => {
     const message = req.body.message;
-    const post = new Post({message, user: req.user_id});
+    const post = new Post({ message, user: req.user_id });
     post.save((err) => {
       if (err) {
         throw err;
