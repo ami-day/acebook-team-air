@@ -11,7 +11,15 @@ const PostsController = {
           populate: {
             path: "user",
             model: "User",
-            select: "email",
+            select: "username",
+          },
+        },
+        {
+          path: "user",
+          populate: {
+            path: "user",
+            model: "User",
+            select: "username",
           },
         },
       ])
@@ -28,12 +36,12 @@ const PostsController = {
       });
   },
   Create: (req, res) => {
-    const post = new Post(req.body);
+    const message = req.body.message;
+    const post = new Post({ message, user: req.user_id });
     post.save((err) => {
       if (err) {
         throw err;
       }
-
       const token = TokenGenerator.jsonwebtoken(req.user_id);
       res.status(201).json({ message: "OK", token: token });
     });
