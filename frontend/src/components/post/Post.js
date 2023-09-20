@@ -5,6 +5,11 @@ const Post = ({ post, token }) => {
   const [showCommentBox, setShowCommentBox] = useState(false);
   const [newComment, setNewComment] = useState("");
 
+const postedAt = new Date(post.createdAt);
+const formattedDate = `${postedAt.toDateString()} -
+  ${String(postedAt.getHours().toPrecision().padStart(2,'0'))}:${String(postedAt.getMinutes().toPrecision().padStart(2,'0'))}`
+
+
   const handleCommentChange = (event) => {
     setNewComment(event.target.value);
   };
@@ -41,12 +46,9 @@ const Post = ({ post, token }) => {
 
   return (
     <article data-cy="post" key={post._id}>
-      <div>
-        {post.message}
-      </div>
-      <div>
-        posted by: {post.user?.username}
-      </div>
+      <div>{post.message}</div>
+      <div>posted by: {post.user?.username}</div>
+      <div>{formattedDate}</div>
       <div>
         {post.comments.length ? (
           <div className="comments">
