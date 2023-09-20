@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Comment from "../comment/Comment";
+import './Post.css';
 
 const Post = ({ post, token }) => {
   const [showCommentBox, setShowCommentBox] = useState(false);
@@ -44,14 +45,15 @@ const Post = ({ post, token }) => {
       <div>
         {post.message}
       </div>
-      <div>
+      <div className="postedby">
         posted by: {post.user?.username}
+      <img id="profilephoto" src={post.user?.photo}/>
       </div>
       <div>
         {post.comments.length ? (
           <div className="comments">
             {post.comments.map((comment) => (
-              <Comment comment={comment} key={comment._id} />
+              <Comment comment={comment} key={comment._id} post={post}/>
             ))}
           </div>
         ) : (

@@ -19,7 +19,7 @@ const PostsController = {
           populate: {
             path: "user",
             model: "User",
-            select: "username",
+            select: ["username", "photo"],
           },
         },
       ])

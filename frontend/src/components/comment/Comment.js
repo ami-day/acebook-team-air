@@ -1,10 +1,12 @@
 import React from "react";
+import '../post/Post.css';
 
-const Comment = ({ comment }) => {
+const Comment = ({ comment, post }) => {
   return (
     <div>
-      <h5>{comment.user?.email}</h5>
-      <p>{comment.content}</p>
+      <p><strong>Author: </strong>{comment.user?.username}</p>
+      <img id="profilephoto" src={post.user?.photo}/>
+      <p><strong>Comment: </strong>{comment.content}</p>
     </div>
   );
 };
