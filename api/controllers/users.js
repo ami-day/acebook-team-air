@@ -1,4 +1,6 @@
+const { post } = require("superagent");
 const User = require("../models/user");
+
 
 const UsersController = {
   Create: (req, res) => {
@@ -11,6 +13,15 @@ const UsersController = {
       }
     });
   },
+  Index: (req, res) => {
+    console.log(req)
+    User.findById(req.user_id).exec((err, foundUser)=>{
+      res.status(200).json({
+        user: foundUser
+      })
+    })
+  }
 };
+
 
 module.exports = UsersController;

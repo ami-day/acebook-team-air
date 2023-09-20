@@ -32,7 +32,7 @@ const Feed = ({ navigate }) => {
   if (token) {
     return (
       <>
-        <Navbar onLogout={logout} />
+        <Navbar onLogout={logout} token={token} />
         <main>
           <div className="mb-5">
             <PostForm token={token}></PostForm>
