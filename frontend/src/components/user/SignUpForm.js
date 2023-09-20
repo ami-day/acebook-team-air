@@ -15,7 +15,7 @@ const SignUpForm = ({ navigate }) => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ email: email, password: password }),
+      body: JSON.stringify({ email: email, password: password, username: username }),
     }).then((response) => {
       if (response.status === 201) {
         navigate("/login");
@@ -68,7 +68,7 @@ const SignUpForm = ({ navigate }) => {
             className="form-control"
             id="photo"
             value={photo}
-            onChange={handleNameChange}
+            onChange={handlePhotoChange}
             placeholder="photoURL"
             autoComplete="off"
           />
