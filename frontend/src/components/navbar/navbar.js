@@ -16,7 +16,7 @@ const Navbar = ({onLogout, token}) => {
           })
             .then((response) => response.json())
             .then(async (data) => {
-              console.log(data.user.email)
+              console.log(data)
               setUser(data.user)
             });
         }
@@ -26,7 +26,7 @@ const Navbar = ({onLogout, token}) => {
       <nav className="nav" id="navbar">
         <h2>AceBook</h2>
         <div className="logout">
-        <h5>{user.email}</h5>
+        <h5>{user.username}</h5>
         <button className="btn btn-danger" onClick={onLogout}>
           Logout
         </button>
