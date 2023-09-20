@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const PostSchema = new mongoose.Schema({
-  message: { type: String, required: true },
+  message: { type: String, required: true }, // Structure arg
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
@@ -12,7 +12,7 @@ const PostSchema = new mongoose.Schema({
       ref: "Comment",
     },
   ],
-});
+}, { timestamps: true }); // Options argument
 
 const Post = mongoose.model("Post", PostSchema);
 
