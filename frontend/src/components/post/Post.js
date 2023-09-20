@@ -42,6 +42,7 @@ const Post = ({ post, token }) => {
   return (
     <article data-cy="post" key={post._id}>
       {post.message}
+      {post.user?.email}
       {post.comments.length ? (
         <div className="comments">
           {post.comments.map((comment) => (
