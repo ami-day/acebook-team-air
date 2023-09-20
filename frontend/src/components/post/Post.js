@@ -41,17 +41,23 @@ const Post = ({ post, token }) => {
 
   return (
     <article data-cy="post" key={post._id}>
-      {post.message}
-      {post.user?.email}
-      {post.comments.length ? (
-        <div className="comments">
-          {post.comments.map((comment) => (
-            <Comment comment={comment} key={comment._id} />
-          ))}
-        </div>
-      ) : (
-        <p>No comments</p>
-      )}
+      <div>
+        {post.message}
+      </div>
+      <div>
+        posted by: {post.user?.username}
+      </div>
+      <div>
+        {post.comments.length ? (
+          <div className="comments">
+            {post.comments.map((comment) => (
+              <Comment comment={comment} key={comment._id} />
+            ))}
+          </div>
+        ) : (
+          <p>No comments</p>
+        )}
+      </div>
 
       {showCommentBox && (
         <>
