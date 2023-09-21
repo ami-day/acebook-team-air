@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import "./PostForm.css";
 
 const PostForm = ({ token }) => {
   const [message, setMessage] = useState("");

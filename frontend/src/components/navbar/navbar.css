@@ -1,27 +1,31 @@
-#navbar{
-    position: fixed;
+#navbar {
+  /* position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
-    background-color: aliceblue;
-    display: flex;
+    width: 100%; */
+  background-color: aliceblue;
+  /* display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 10px;
-    z-index: 100;
-  }
+    z-index: 100; */
+}
 
-.logout{
+.navbar-right,
+.navbar-brand {
   display: flex;
   align-items: center;
   gap: 25px;
 }
 
-.logout h5{
-  margin-bottom: 0;
+.navbar-brand {
+  font-size: 2rem !important;
 }
 
-.logout img{
-  height: 40px;
-  border-radius: 50%;
+.navbar-brand img {
+  width: 40px;
+}
+
+.navbar-right h5 {
+  margin-bottom: 0;
 }

@@ -15,7 +15,7 @@ body {
 }
 
 main {
-  padding-top: 100px;
+  /* padding-top: 100px; */
   min-height: 100vh;
 }
 
@@ -28,6 +28,7 @@ form {
   background-color: aliceblue;
   max-width: 400px;
   flex-grow: 1;
+  margin: 1rem;
 }
 
 
@@ -57,7 +58,14 @@ article {
 }
 
 
-.error{
+.error {
   color: red;
 }
 
+.avatar {
+  object-fit: cover;
+  object-position: center;
+  width: 50px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+}
