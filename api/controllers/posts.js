@@ -36,8 +36,13 @@ const PostsController = {
       });
   },
   Create: (req, res) => {
+    console.log(req.file);
+    let photo = "";
     const message = req.body.message;
-    const post = new Post({ message, user: req.user_id });
+    if (req.file) {
+      photo = req.file.filename;
+    }
+    const post = new Post({ message, user: req.user_id, photo });
     post.save((err) => {
       if (err) {
         throw err;

@@ -19,19 +19,19 @@ const Feed = ({ navigate }) => {
         .then(async (data) => {
           window.localStorage.setItem("token", data.token);
           setToken(window.localStorage.getItem("token"));
-          console.log(data);
+          console.log(data.posts);
           sortDates(data.posts);
           setPosts(data.posts);
         });
     }
   }, []);
 
-const sortDates = (array) => {
-  array.sort((a,b) => {
-    return new Date(b.createdAt) - new Date(a.createdAt);
-  });
-}
-  
+  const sortDates = (array) => {
+    array.sort((a, b) => {
+      return new Date(b.createdAt) - new Date(a.createdAt);
+    });
+  };
+
   const logout = () => {
     window.localStorage.removeItem("token");
     navigate("/login");
@@ -46,7 +46,9 @@ const sortDates = (array) => {
             <PostForm token={token}></PostForm>
           </div>
           <div>
-            <h2 style={{color: "aliceblue"}} className="text-center">Posts</h2>
+            <h2 style={{ color: "aliceblue" }} className="text-center">
+              Posts
+            </h2>
             <div id="feed" role="feed" className="container">
               {posts.map((post) => (
                 <Post post={post} key={post._id} token={token} />
