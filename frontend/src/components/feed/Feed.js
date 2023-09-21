@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Post from "../post/Post";
 import PostForm from "../post/PostForm";
 import Navbar from "../navbar/navbar";
+import "./Feed.css";
 
 const Feed = ({ navigate }) => {
   const [posts, setPosts] = useState([]);
@@ -45,7 +46,7 @@ const sortDates = (array) => {
             <PostForm token={token}></PostForm>
           </div>
           <div>
-            <h2 className="text-center">Posts</h2>
+            <h2 style={{color: "aliceblue"}} className="text-center">Posts</h2>
             <div id="feed" role="feed" className="container">
               {posts.map((post) => (
                 <Post post={post} key={post._id} token={token} />

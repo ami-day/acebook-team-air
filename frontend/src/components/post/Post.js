@@ -80,7 +80,7 @@ const formattedDate = `${postedAt.toDateString()} -
           ></textarea>
           <button
             onClick={submitComment}
-            className="btn btn-info btn-sm px-4 mb-3"
+            className="btn btn-primary btn-sm px-4"
           >
             Post comment
           </button>
@@ -90,7 +90,7 @@ const formattedDate = `${postedAt.toDateString()} -
         onClick={() => {
           setShowCommentBox(!showCommentBox);
         }}
-        className={`btn btn-sm px-2 ${
+        className={`btn btn-primary btn-sm px-2 ${
           showCommentBox ? "btn-danger" : "btn-info"
         }`}
       >

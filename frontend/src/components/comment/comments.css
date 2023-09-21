@@ -1,6 +1,7 @@
 #profilephoto2{
     height: 20px;
     padding: 3px;
+    border-radius: 50%;
 }
 
 #para {

@@ -53,7 +53,7 @@ const PostForm = ({ token }) => {
           onClick={handleSubmitPost}
           type="submit"
           id="submit"
-          className="btn btn-success px-5"
+          className="btn btn-primary px-5"
         >
           Post
         </button>
