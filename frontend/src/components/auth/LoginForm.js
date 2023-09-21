@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-
 const LogInForm = ({ navigate }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
+  const [errorMessage, setErrorMessage] = useState('')
+  
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -15,12 +15,12 @@ const LogInForm = ({ navigate }) => {
       },
       body: JSON.stringify({ email: email, password: password }),
     });
-
+    
     if (response.status !== 201) {
-      console.log("yay");
-      navigate("/login");
+      let data = await response.json()
+      setErrorMessage(data.message)
+      //navigate("/login");
     } else {
-      console.log("oop");
       let data = await response.json();
       window.localStorage.setItem("token", data.token);
       navigate("/posts");
@@ -70,6 +70,7 @@ const LogInForm = ({ navigate }) => {
             onChange={handlePasswordChange}
           />
         </div>
+        <p className="error">{errorMessage}</p>
         <div className="text-center">
           <button
             type="submit"
