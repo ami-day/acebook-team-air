@@ -47,17 +47,18 @@ const formattedDate = `${postedAt.toDateString()} -
 
   return (
     <article data-cy="post" key={post._id}>
-      <div>
+      <div style={{fontSize: "24px"}}>
         {post.message}
       </div>
       <div className="postedby">
-        posted by: {post.user?.username}
+        <span style={{fontWeight: "bold"}}>posted by:</span> {post.user?.username}
       <img id="profilephoto" src={post.user?.photo}/>
       </div>
-      <div>{formattedDate}</div>
+      <div style={{fontSize: "12px"}}>{formattedDate}</div>
       <div>
         {post.comments.length ? (
           <div className="comments">
+            <p style={{fontSize: "14px", padding: "0px", margin: "0px", textAlign: "center"}}>Comments</p>
             {post.comments.map((comment) => (
               <Comment comment={comment} key={comment._id} post={post}/>
             ))}
@@ -89,7 +90,7 @@ const formattedDate = `${postedAt.toDateString()} -
         onClick={() => {
           setShowCommentBox(!showCommentBox);
         }}
-        className={`btn btn-sm px-4 ${
+        className={`btn btn-sm px-2 ${
           showCommentBox ? "btn-danger" : "btn-info"
         }`}
       >
