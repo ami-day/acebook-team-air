@@ -6,24 +6,48 @@ const SignUpForm = ({ navigate }) => {
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
   const [photo, setPhoto] = useState("");
+  const [errorMessage, setErrorMessage] = useState("")
+  const [confirmPassword, setConfirmPassword] = useState("");
   
   const handleSubmit = async (event) => {
-    event.preventDefault();
-
-    fetch("/users", {
-      method: "post",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ email: email, password: password, username: username, photo: photo }),
-    }).then((response) => {
-      if (response.status === 201) {
-        navigate("/login");
-      } else {
-        navigate("/signup");
+    event.preventDefault()
+    if(!passwordValiding(password)){
+      setErrorMessage("Password not valid. Password must include an uppercase and lowercase character, a special character (@$!%*?&) and be a minimum of 8 characters")
+    }else if(password != confirmPassword){
+      setErrorMessage("Passwords do not match")
+    }
+    else{
+      fetch("/users", {
+        method: "post",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email: email, password: password, username: username, photo: photo }),
+      }).then((response) => {
+        if (response.status === 201) {
+          navigate("/login");
+        } else {
+          return response.json()
+        }
+      }).then( (data) => {
+        setErrorMessage(data.message)
       }
-    });
-  };
+      )
+    };}
+    
+  
+  
+
+
+  const passwordValiding = (password) => {
+    const regex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    if (regex.test(password)) {
+      return true
+    } else {
+      return false
+    }
+  }
+  
 
   const handleEmailChange = (event) => {
     setEmail(event.target.value);
@@ -33,6 +57,10 @@ const SignUpForm = ({ navigate }) => {
     setPassword(event.target.value);
   };
 
+  const handleConfirmPasswordChange = (event) => {
+    setConfirmPassword(event.target.value);
+  };
+  
   const handleNameChange = (event) => {
     setUsername(event.target.value);
   };  
@@ -102,6 +130,21 @@ const SignUpForm = ({ navigate }) => {
             onChange={handlePasswordChange}
           />
         </div>
+        <div className="mb-3">
+          <label htmlFor="confirm-password" className="form-label">
+            Confirm Password
+          </label>
+          <input
+            type="password"
+            placeholder="Re-enter Password"
+            className="form-control"
+            id="confirm-password"
+            autoComplete="new-password"
+            value={confirmPassword}
+            onChange={handleConfirmPasswordChange}
+          />
+        </div>
+        <p className='error'>{errorMessage}</p>
         <div className="text-center">
           <button
             type="submit"
