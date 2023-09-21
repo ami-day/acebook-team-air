@@ -6,6 +6,11 @@ const Post = ({ post, token }) => {
   const [showCommentBox, setShowCommentBox] = useState(false);
   const [newComment, setNewComment] = useState("");
 
+const postedAt = new Date(post.createdAt);
+const formattedDate = `${postedAt.toDateString()} -
+  ${String(postedAt.getHours().toPrecision().padStart(2,'0'))}:${String(postedAt.getMinutes().toPrecision().padStart(2,'0'))}`
+
+
   const handleCommentChange = (event) => {
     setNewComment(event.target.value);
   };
@@ -49,6 +54,7 @@ const Post = ({ post, token }) => {
         posted by: {post.user?.username}
       <img id="profilephoto" src={post.user?.photo}/>
       </div>
+      <div>{formattedDate}</div>
       <div>
         {post.comments.length ? (
           <div className="comments">
