@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Comment from "../comment/Comment";
+import './Post.css';
 
 const Post = ({ post, token }) => {
   const [showCommentBox, setShowCommentBox] = useState(false);
@@ -46,14 +47,19 @@ const formattedDate = `${postedAt.toDateString()} -
 
   return (
     <article data-cy="post" key={post._id}>
-      <div>{post.message}</div>
-      <div>posted by: {post.user?.username}</div>
+      <div>
+        {post.message}
+      </div>
+      <div className="postedby">
+        posted by: {post.user?.username}
+      <img id="profilephoto" src={post.user?.photo}/>
+      </div>
       <div>{formattedDate}</div>
       <div>
         {post.comments.length ? (
           <div className="comments">
             {post.comments.map((comment) => (
-              <Comment comment={comment} key={comment._id} />
+              <Comment comment={comment} key={comment._id} post={post}/>
             ))}
           </div>
         ) : (
