@@ -1,10 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./navbar.css";
-import React, { useEffect, useState } from "react";
-import "./navbar.css";
 
-const Navbar = ({ onLogout, token }) => {
-  const [user, setUser] = useState("");
 const Navbar = ({ onLogout, token }) => {
   const [user, setUser] = useState("");
 
@@ -21,6 +17,7 @@ const Navbar = ({ onLogout, token }) => {
         });
     }
   }, []);
+
   return (
     <nav className="navbar" id="navbar">
       {/* <div className="container-fluid"> */}
