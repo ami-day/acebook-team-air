@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from "react";
 import "./navbar.css";
+import React, { useEffect, useState } from "react";
+import "./navbar.css";
 
+const Navbar = ({ onLogout, token }) => {
+  const [user, setUser] = useState("");
 const Navbar = ({ onLogout, token }) => {
   const [user, setUser] = useState("");
 
@@ -13,7 +17,6 @@ const Navbar = ({ onLogout, token }) => {
       })
         .then((response) => response.json())
         .then(async (data) => {
-          console.log(data);
           setUser(data.user);
         });
     }

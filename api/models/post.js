@@ -1,18 +1,22 @@
 const mongoose = require("mongoose");
 
-const PostSchema = new mongoose.Schema({
-  message: { type: String, required: true }, // Structure arg
-  user: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
-  },
-  comments: [
-    {
+const PostSchema = new mongoose.Schema(
+  {
+    message: { type: String, required: true }, // Structure arg
+    user: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Comment",
+      ref: "User",
     },
-  ]
-}, { timestamps: true }); // Options argument
+    photo: String,
+    comments: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Comment",
+      },
+    ],
+  },
+  { timestamps: true }
+); // Options argument
 
 const Post = mongoose.model("Post", PostSchema);
 

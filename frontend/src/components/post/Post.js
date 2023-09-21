@@ -1,18 +1,17 @@
 import React, { useState } from "react";
 import Comment from "../comment/Comment";
 import Like from "../like/Like";
-import './Post.css';
+import "./Post.css";
 
 const Post = ({ post, token }) => {
   const [showCommentBox, setShowCommentBox] = useState(false);
   const [newComment, setNewComment] = useState("");
 
-  
-
-const postedAt = new Date(post.createdAt);
-const formattedDate = `${postedAt.toDateString()} -
-  ${String(postedAt.getHours().toPrecision().padStart(2,'0'))}:${String(postedAt.getMinutes().toPrecision().padStart(2,'0'))}`
-
+  const postedAt = new Date(post.createdAt);
+  const formattedDate = `${postedAt.toDateString()} -
+  ${String(postedAt.getHours().toPrecision().padStart(2, "0"))}:${String(
+    postedAt.getMinutes().toPrecision().padStart(2, "0")
+  )}`;
 
   const handleCommentChange = (event) => {
     setNewComment(event.target.value);
@@ -49,23 +48,32 @@ const formattedDate = `${postedAt.toDateString()} -
 
   return (
     <article data-cy="post" key={post._id}>
-      <div style={{fontSize: "24px"}}>
-        {post.message}
-      </div>
+      <div style={{ fontSize: "24px" }}>{post.message}</div>
       <div className="postedby">
-        <span style={{fontWeight: "bold"}}>posted by:</span> {post.user?.username}
-      <img id="profilephoto" src={post.user?.photo}/>
+        <span style={{ fontWeight: "bold" }}>posted by:</span>{" "}
+        {post.user?.username}
+        <img id="profilephoto" src={post.user?.photo} />
+        {post.photo && <img className="post-img" src={`/${post.photo}`} />}
       </div>
-      <div style={{fontSize: "12px"}}>{formattedDate}</div>
+      <div style={{ fontSize: "12px" }}>{formattedDate}</div>
       <div>
-         <Like/>
+        <Like />
       </div>
       <div>
         {post.comments.length ? (
           <div className="comments">
-            <p style={{fontSize: "14px", padding: "0px", margin: "0px", textAlign: "center"}}>Comments</p>
+            <p
+              style={{
+                fontSize: "14px",
+                padding: "0px",
+                margin: "0px",
+                textAlign: "center",
+              }}
+            >
+              Comments
+            </p>
             {post.comments.map((comment) => (
-              <Comment comment={comment} key={comment._id} post={post}/>
+              <Comment comment={comment} key={comment._id} post={post} />
             ))}
           </div>
         ) : (
@@ -84,16 +92,14 @@ const formattedDate = `${postedAt.toDateString()} -
             placeholder="Leave a comment here..."
           ></textarea>
           <div>
-          <button
-            onClick={submitComment}
-            className="btn btn-primary btn-sm px-4"
-          >
-            Post comment
-          </button>
+            <button
+              onClick={submitComment}
+              className="btn btn-primary btn-sm px-4"
+            >
+              Post comment
+            </button>
           </div>
         </>
-
-
       )}
       <button
         onClick={() => {
@@ -105,7 +111,6 @@ const formattedDate = `${postedAt.toDateString()} -
       >
         {showCommentBox ? "Close" : "Leave a comment"}
       </button>
-      
     </article>
   );
 };
