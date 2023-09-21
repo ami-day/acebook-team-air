@@ -1,23 +1,31 @@
+import "./PostForm.css";
 import React, { useState } from "react";
 
 const PostForm = ({ token }) => {
   const [message, setMessage] = useState("");
+  const [photo, setPhoto] = useState("");
 
   const handleMessageChange = (event) => {
     setMessage(event.target.value);
   };
 
+  const handlePhotoChange = (event) => {
+    setPhoto(() => event.target.files[0]);
+  };
+
   const handleSubmitPost = async (event) => {
     event.preventDefault();
+    const formData = new FormData();
+    formData.append("photo", photo);
+    formData.append("message", message);
 
     if (token) {
       fetch("/posts", {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ message: message }),
+        body: formData,
       }).then((response) => {
         if (response.status === 201) {
           window.location.reload();
@@ -36,6 +44,7 @@ const PostForm = ({ token }) => {
       id="post-form"
       className="rounded-4 p-3 mx-auto"
       onSubmit={handleSubmitPost}
+      encType="multipart/form-data"
     >
       <div className="mb-3">
         <h2 className="text-center">Create New Post</h2>
@@ -49,14 +58,33 @@ const PostForm = ({ token }) => {
         ></textarea>
       </div>
       <div className="d-flex justify-content-center">
-        <button
+        <div className="input-group">
+          <input
+            type="file"
+            accept=".png, .jpg, .jpeg"
+            onChange={handlePhotoChange}
+            class="photo-upload form-control"
+            id="photo-upload-input"
+            aria-describedby="photo-upload-input"
+            aria-label="post"
+          />
+          <button
+            class="btn btn-primary"
+            type="button"
+            id="photo-upload-button"
+            onClick={handleSubmitPost}
+          >
+            Post
+          </button>
+        </div>
+        {/* <button
           onClick={handleSubmitPost}
           type="submit"
           id="submit"
           className="btn btn-primary px-5"
         >
           Post
-        </button>
+        </button> */}
       </div>
     </form>
   );

@@ -1,4 +1,4 @@
-#profilephoto{
+#profilephoto {
     height: 12px;
     display: inline-block;
     margin-left: 3px;
@@ -7,4 +7,8 @@
 
 .postedby {
     font-size: 12px;
+}
+
+.post-img {
+    width: 100%;
 }
