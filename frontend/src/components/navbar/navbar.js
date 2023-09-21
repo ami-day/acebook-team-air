@@ -27,6 +27,7 @@ const Navbar = ({onLogout, token}) => {
         <h2>AceBook</h2>
         <div className="logout">
         <h5>{user.username}</h5>
+        <img src={user.photo}/>
         <button className="btn btn-danger" onClick={onLogout}>
           Logout
         </button>

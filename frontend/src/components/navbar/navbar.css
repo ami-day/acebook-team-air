@@ -20,3 +20,8 @@
 .logout h5{
   margin-bottom: 0;
 }
+
+.logout img{
+  height: 40px;
+  border-radius: 50%;
+}
