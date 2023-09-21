@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Comment from "../comment/Comment";
+import Like from "../like/Like";
 import "./Post.css";
 
 const Post = ({ post, token }) => {
@@ -15,7 +16,6 @@ const Post = ({ post, token }) => {
   const handleCommentChange = (event) => {
     setNewComment(event.target.value);
   };
-
   const submitComment = (event) => {
     event.preventDefault();
     // make post request to create new comment
@@ -57,6 +57,9 @@ const Post = ({ post, token }) => {
       </div>
       <div style={{ fontSize: "12px" }}>{formattedDate}</div>
       <div>
+        <Like />
+      </div>
+      <div>
         {post.comments.length ? (
           <div className="comments">
             <p
@@ -88,12 +91,14 @@ const Post = ({ post, token }) => {
             onChange={handleCommentChange}
             placeholder="Leave a comment here..."
           ></textarea>
-          <button
-            onClick={submitComment}
-            className="btn btn-primary btn-sm px-4"
-          >
-            Post comment
-          </button>
+          <div>
+            <button
+              onClick={submitComment}
+              className="btn btn-primary btn-sm px-4"
+            >
+              Post comment
+            </button>
+          </div>
         </>
       )}
       <button
@@ -101,7 +106,7 @@ const Post = ({ post, token }) => {
           setShowCommentBox(!showCommentBox);
         }}
         className={`btn btn-primary btn-sm px-2 ${
-          showCommentBox ? "btn-danger" : "btn-info"
+          showCommentBox ? "btn-danger" : "btn-primary"
         }`}
       >
         {showCommentBox ? "Close" : "Leave a comment"}
