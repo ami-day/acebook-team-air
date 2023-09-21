@@ -1,5 +1,9 @@
 #profilephoto{
-    height: 20px;
+    height: 12px;
     display: inline-block;
-    margin-left: 10px;
+    margin-left: 3px;
+}
+
+.postedby {
+    font-size: 12px;
 }

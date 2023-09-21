@@ -1,0 +1,19 @@
+#profilephoto2{
+    height: 20px;
+    padding: 3px;
+}
+
+#para {
+    padding: 0px;
+    margin: 0px;
+    border: none;
+    display: inline;
+    font-size: 12px;
+}
+
+#comment {
+    padding: 0px;
+    margin: 0px;
+    border: none;
+    font-size: 12px;
+}
