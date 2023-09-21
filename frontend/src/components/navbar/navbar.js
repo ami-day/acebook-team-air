@@ -23,7 +23,7 @@ const Navbar = ({ onLogout, token }) => {
       {/* <div className="container-fluid"> */}
       <a className="navbar-brand">
         <img
-          className="d-inline-block align-text-top ms-3"
+          className="d-inline-block align-text-top"
           src="/apple-touch-icon.png"
         />
         AceBook

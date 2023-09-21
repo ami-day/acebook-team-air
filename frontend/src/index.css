@@ -15,8 +15,9 @@ body {
 }
 
 main {
-  /* padding-top: 100px; */
+  padding-top: 100px;
   min-height: 100vh;
+  padding-inline: 20px;
 }
 
 code {
@@ -29,17 +30,7 @@ form {
   max-width: 400px;
   flex-grow: 1;
   margin: 1rem;
-}
-
-
-article {
-  background-color: aliceblue;
-  width: 300px;
-  padding: 20px;
-  border-radius: 10px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  box-shadow: 5px 5px 10px 0px rgba(0, 0, 0, 0.2);
 }
 
 #feed {
@@ -50,14 +41,6 @@ article {
   padding: 20px;
 }
 
-.comments {
-  background-color: rgba(166, 165, 165, 0.2);
-  padding: 10px;
-  margin-block: 20px;
-  border-radius: 15px;
-}
-
-
 .error {
   color: red;
 }
@@ -66,6 +49,6 @@ article {
   object-fit: cover;
   object-position: center;
   width: 50px;
-  aspect-ratio: 1;
+  height: 50px;
   border-radius: 50%;
 }

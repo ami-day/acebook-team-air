@@ -1,23 +1,12 @@
 import React, { useState } from "react";
-import "../like/like.css"
+import "../like/like.css";
 
-const Like = () => {
-  const [likes, setLikes] = useState(0);
-
-  const handleLikeClick = () => {
-    setLikes(likes + 1);
-  };
-
+const Like = ({ likes }) => {
   return (
     <div>
-      <p className="symbol">  👍🏼{likes} </p>
-      <button onClick={handleLikeClick} className="like-button btn btn-primary">
-        Like
-      </button>
+      <p className="likes">👍 {likes} </p>
     </div>
   );
 };
-
-
 
 export default Like;
