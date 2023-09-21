@@ -1,11 +1,12 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import Comment from "../comment/Comment";
 import Like from "../like/Like";
 import "./Post.css";
 
 const Post = ({ post, token }) => {
-  const [showCommentBox, setShowCommentBox] = useState(false);
+  const commentBox = useRef();
   const [newComment, setNewComment] = useState("");
+  const [likes, setLikes] = useState(0);
 
   const postedAt = new Date(post.createdAt);
   const formattedDate = `${postedAt.toDateString()} -
@@ -16,6 +17,11 @@ const Post = ({ post, token }) => {
   const handleCommentChange = (event) => {
     setNewComment(event.target.value);
   };
+
+  const handleLikeClick = () => {
+    setLikes(likes + 1);
+  };
+
   const submitComment = (event) => {
     event.preventDefault();
     // make post request to create new comment
@@ -47,69 +53,51 @@ const Post = ({ post, token }) => {
   };
 
   return (
-    <article data-cy="post" key={post._id}>
-      <div style={{ fontSize: "24px" }}>{post.message}</div>
-      <div className="postedby">
-        <span style={{ fontWeight: "bold" }}>posted by:</span>{" "}
-        {post.user?.username}
-        <img id="profilephoto" src={post.user?.photo} />
-        {post.photo && <img className="post-img" src={`/${post.photo}`} />}
+    <article className="post" data-cy="post" key={post._id}>
+      <div className="post-header">
+        <img class="avatar" src={post.user?.photo} />
+        <div>
+          <p className="username">{post.user.username}</p>
+          <p className="datetime">{formattedDate}</p>
+        </div>
       </div>
-      <div style={{ fontSize: "12px" }}>{formattedDate}</div>
-      <div>
-        <Like />
+      <p>{post.message}</p>
+      {post.photo && <img className="post-img" src={`/${post.photo}`} />}
+      <Like likes={likes} />
+      <div className="post-buttons">
+        <button onClick={handleLikeClick} className="btn btn-primary">
+          Like
+        </button>
+        <button
+          onClick={() => {
+            commentBox.current.focus();
+          }}
+          className="btn btn-primary"
+        >
+          Comment
+        </button>
       </div>
-      <div>
+      <div className="comments">
         {post.comments.length ? (
-          <div className="comments">
-            <p
-              style={{
-                fontSize: "14px",
-                padding: "0px",
-                margin: "0px",
-                textAlign: "center",
-              }}
-            >
-              Comments
-            </p>
-            {post.comments.map((comment) => (
-              <Comment comment={comment} key={comment._id} post={post} />
-            ))}
-          </div>
+          post.comments.map((comment) => (
+            <Comment comment={comment} key={comment._id} post={post} />
+          ))
         ) : (
-          <p>No comments</p>
+          <p className="text-center">Be the first to leave a comment</p>
         )}
       </div>
 
-      {showCommentBox && (
-        <>
-          <textarea
-            className="form-control mb-3"
-            id="new-comment"
-            rows="3"
-            value={newComment}
-            onChange={handleCommentChange}
-            placeholder="Leave a comment here..."
-          ></textarea>
-          <div>
-            <button
-              onClick={submitComment}
-              className="btn btn-primary btn-sm px-4"
-            >
-              Post comment
-            </button>
-          </div>
-        </>
-      )}
-      <button
-        onClick={() => {
-          setShowCommentBox(!showCommentBox);
-        }}
-        className={`btn btn-primary btn-sm px-2 ${
-          showCommentBox ? "btn-danger" : "btn-primary"
-        }`}
-      >
-        {showCommentBox ? "Close" : "Leave a comment"}
+      <textarea
+        className="form-control"
+        id="new-comment"
+        ref={commentBox}
+        rows="3"
+        value={newComment}
+        onChange={handleCommentChange}
+        placeholder="Leave a comment here..."
+      />
+      <button onClick={submitComment} className="btn btn-primary">
+        Post comment
       </button>
     </article>
   );

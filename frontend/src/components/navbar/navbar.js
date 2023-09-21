@@ -17,21 +17,26 @@ const Navbar = ({ onLogout, token }) => {
         });
     }
   }, []);
+
   return (
-    <div>
-      <nav className="nav" id="navbar">
-        <h2>AceBook</h2>
-        <div className="logout">
-          <h5>{user.username}</h5>
-          <div className="avatar">
-            <img src={user.photo} />
-          </div>
-          <button className="btn btn-danger" onClick={onLogout}>
-            Logout
-          </button>
-        </div>
-      </nav>
-    </div>
+    <nav className="navbar" id="navbar">
+      {/* <div className="container-fluid"> */}
+      <a className="navbar-brand">
+        <img
+          className="d-inline-block align-text-top"
+          src="/apple-touch-icon.png"
+        />
+        AceBook
+      </a>
+      <div className="navbar-right">
+        <h5>{user.username}</h5>
+        <img className="avatar" src={user.photo} />
+        <button className="btn btn-danger" onClick={onLogout}>
+          Logout
+        </button>
+      </div>
+      {/* </div> */}
+    </nav>
   );
 };
 export default Navbar;

@@ -4,34 +4,39 @@
   left: 0;
   width: 100%;
   background-color: aliceblue;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px;
+  box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.2);
   z-index: 100;
 }
 
-.logout {
+.navbar-right,
+.navbar-brand {
   display: flex;
   align-items: center;
-  gap: 25px;
+  gap: 20px;
+  margin-inline: 20px;
 }
 
-.logout h5 {
+.navbar-brand {
+  font-size: 2rem !important;
+  font-weight: 700;
+}
+
+.navbar-brand img {
+  width: 40px;
+}
+
+.navbar-right h5 {
   margin-bottom: 0;
 }
 
-.logout .avatar {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  overflow: hidden;
-}
+@media (max-width: 600px) {
 
-.logout img {
-  height: 100%;
-  object-fit: contain;
-  object-position: center;
-  /* aspect-ratio: 1; */
-  /* border-radius: 50%; */
+  .navbar-brand {
+    font-size: 1.25rem !important;
+  }
+
+  .navbar-right h5 {
+    display: none;
+  }
+
 }
