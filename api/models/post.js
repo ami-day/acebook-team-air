@@ -11,7 +11,7 @@ const PostSchema = new mongoose.Schema({
       type: mongoose.Schema.Types.ObjectId,
       ref: "Comment",
     },
-  ],
+  ]
 }, { timestamps: true }); // Options argument
 
 const Post = mongoose.model("Post", PostSchema);

@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 import Comment from "../comment/Comment";
+import Like from "../like/Like";
 import './Post.css';
 
 const Post = ({ post, token }) => {
   const [showCommentBox, setShowCommentBox] = useState(false);
   const [newComment, setNewComment] = useState("");
+
+  
 
 const postedAt = new Date(post.createdAt);
 const formattedDate = `${postedAt.toDateString()} -
@@ -14,7 +17,6 @@ const formattedDate = `${postedAt.toDateString()} -
   const handleCommentChange = (event) => {
     setNewComment(event.target.value);
   };
-
   const submitComment = (event) => {
     event.preventDefault();
     // make post request to create new comment
@@ -56,6 +58,9 @@ const formattedDate = `${postedAt.toDateString()} -
       </div>
       <div style={{fontSize: "12px"}}>{formattedDate}</div>
       <div>
+         <Like/>
+      </div>
+      <div>
         {post.comments.length ? (
           <div className="comments">
             <p style={{fontSize: "14px", padding: "0px", margin: "0px", textAlign: "center"}}>Comments</p>
@@ -78,24 +83,29 @@ const formattedDate = `${postedAt.toDateString()} -
             onChange={handleCommentChange}
             placeholder="Leave a comment here..."
           ></textarea>
+          <div>
           <button
             onClick={submitComment}
             className="btn btn-primary btn-sm px-4"
           >
             Post comment
           </button>
+          </div>
         </>
+
+
       )}
       <button
         onClick={() => {
           setShowCommentBox(!showCommentBox);
         }}
         className={`btn btn-primary btn-sm px-2 ${
-          showCommentBox ? "btn-danger" : "btn-info"
+          showCommentBox ? "btn-danger" : "btn-primary"
         }`}
       >
         {showCommentBox ? "Close" : "Leave a comment"}
       </button>
+      
     </article>
   );
 };
