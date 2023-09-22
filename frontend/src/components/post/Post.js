@@ -55,7 +55,7 @@ const Post = ({ post, token }) => {
   return (
     <article className="post" data-cy="post" key={post._id}>
       <div className="post-header">
-        <img class="avatar" src={post.user?.photo} />
+        <img className="avatar" src={post.user?.photo} />
         <div>
           <p className="username">{post.user.username}</p>
           <p className="datetime">{formattedDate}</p>

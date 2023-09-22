@@ -64,13 +64,13 @@ const PostForm = ({ token }) => {
             type="file"
             accept=".png, .jpg, .jpeg"
             onChange={handlePhotoChange}
-            class="photo-upload form-control"
+            className="photo-upload form-control"
             id="photo-upload-input"
             aria-describedby="photo-upload-input"
             aria-label="post"
           />
           <button
-            class="btn btn-primary"
+            className="btn btn-primary"
             type="button"
             id="photo-upload-button"
             onClick={handleSubmitPost}
