@@ -2,10 +2,11 @@ import React, { useEffect, useState } from "react";
 import Post from "../post/Post";
 import PostForm from "../post/PostForm";
 import Navbar from "../navbar/navbar";
-import "./Feed.css";
+import ProfileCard from "./ProfileCard";
+import "./Profile.css";
 
 
-const Feed = ({ navigate }) => {
+const Profile = ({ navigate }) => {
   const [posts, setPosts] = useState([]);
   const [token, setToken] = useState(window.localStorage.getItem("token"));
 
@@ -45,6 +46,7 @@ const Feed = ({ navigate }) => {
       <>
         <Navbar onLogout={logout} token={token} />
         <main>
+          <ProfileCard />
           <div className="mb-5">
             <PostForm token={token}></PostForm>
           </div>
@@ -52,7 +54,7 @@ const Feed = ({ navigate }) => {
             <h2 style={{ color: "aliceblue" }} className="text-center">
               Posts
             </h2>
-            <div id="feed" role="feed" className="container">
+            <div id="profile" role="profile" className="container">
               {posts.map((post) => (
                 <Post post={post} key={post._id} token={token} />
               ))}
@@ -66,4 +68,4 @@ const Feed = ({ navigate }) => {
   }
 };
 
-export default Feed;
+export default Profile;
