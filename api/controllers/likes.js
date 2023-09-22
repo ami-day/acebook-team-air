@@ -18,7 +18,14 @@ const LikesController = {
       )
             }
           );
-        }
+        },
+  Index: (req, res) => {
+    console.log(req.query)
+    const token = TokenGenerator.jsonwebtoken(req.user_id);
+    Like.find({postId: req.query.postId}, (error, data) => {
+      res.status(201).json({ message: "OK", token: token, likes: data })
+    })
+  }
     }
 
 module.exports = LikesController;

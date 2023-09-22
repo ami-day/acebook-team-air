@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect} from "react";
 import Comment from "../comment/Comment";
 import Like from "../like/Like";
 import "./Post.css";
@@ -6,7 +6,24 @@ import "./Post.css";
 const Post = ({ post, token}) => {
   const commentBox = useRef();
   const [newComment, setNewComment] = useState("");
-  //const [likeCount, setLikeCount] = useState(0);
+  const [likeCount, setLikeCount] = useState(0);
+
+useEffect(() => {
+  if (token) {
+    fetch(`/likes?postId=${post._id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((response) => response.json())
+      .then(async (data) => {
+        setLikeCount(data.likes.length)
+        console.log(data);
+      });
+  }
+}, [likeCount]);
+
+
 
   const postedAt = new Date(post.createdAt);
   const formattedDate = `${postedAt.toDateString()} -
