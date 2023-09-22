@@ -1,44 +1,11 @@
 import React, { useState } from "react";
 import "../like/like.css";
 
-
-
-const Like = ({ likes, post, token}) => {
-
-  const data = {
-    userId: post.user?.username,
-    postId: post._id,
-  };
-
-  const likeHandler = (event) => {
-    event.preventDefault();
-    if (token) {
-      console.log(data)
-      fetch("/likes", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(data),
-      }).then((response) => {
-        if (response.status === 201) {
-          //window.location.reload();
-          console.log("like successfully added");
-        } else {
-          console.log("like not successfully added");
-        }
-      });
-    } else {
-      console.log("No token!");
-    }
-  }
-
+const Like = ({ likeCount, post, token}) => {
 
   return (
     <div>
-    <p className="likes">👍 {likes} </p>
-    <button type="button" className="btn btn-primary" onClick={likeHandler}>like</button>
+    <p className="likes">👍 {likeCount} </p>
   </div>
 );
 }
