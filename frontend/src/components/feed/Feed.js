@@ -23,6 +23,8 @@ const Feed = ({ navigate }) => {
           sortDates(data.posts);
           setPosts(data.posts);
         });
+    } else {
+      navigate("/login");
     }
   }, []);
 
