@@ -1,0 +1,13 @@
+const mongoose = require("mongoose");
+
+const LikeSchema = new mongoose.Schema(
+  {
+    userId: { type: String, required: true },
+    postId:{ type: String, required: true }
+  },
+  { timestamps: true }
+);
+
+const Like = mongoose.model("Like", LikeSchema);
+
+module.exports = Like;

@@ -19,7 +19,6 @@ const PostForm = ({ token }) => {
     const formData = new FormData();
     formData.append("photo", photo);
     formData.append("message", message);
-
     if (token) {
       fetch("/posts", {
         method: "POST",

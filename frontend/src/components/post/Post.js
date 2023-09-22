@@ -3,7 +3,7 @@ import Comment from "../comment/Comment";
 import Like from "../like/Like";
 import "./Post.css";
 
-const Post = ({ post, token }) => {
+const Post = ({ post, token}) => {
   const commentBox = useRef();
   const [newComment, setNewComment] = useState("");
   const [likes, setLikes] = useState(0);
@@ -63,7 +63,7 @@ const Post = ({ post, token }) => {
       </div>
       <p>{post.message}</p>
       {post.photo && <img className="post-img" src={`/${post.photo}`} />}
-      <Like likes={likes} />
+      <Like likes={likes} post={post} token={token}/>
       <div className="post-buttons">
         <button onClick={handleLikeClick} className="btn btn-primary">
           Like
