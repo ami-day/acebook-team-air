@@ -1,12 +1,12 @@
-const Post = require("../models/post");
-const User = require("../models/user");
 const TokenGenerator = require("../lib/token_generator");
+const Like = require("../models/likes");
 
 const likesController = {
   Create: (req, res) => {
+    console.log(req.body);
     const userId = req.body.userId;
     const postId = req.body.postId;
-    const like = new Likes({userId, postId});
+    const like = new Like({userId, postId});
     like.save((err) => {
       if (err) {
         throw err;
@@ -18,4 +18,4 @@ const likesController = {
         }
     }
 
-module.exports = CommentsController;
+module.exports = likesController;

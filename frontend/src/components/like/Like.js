@@ -9,8 +9,10 @@ const Like = ({ likes, post, token}) => {
     userId: post.user?.username,
     postId: post._id,
   };
+
   const likeHandler = () => {
     if (token) {
+      console.log(data)
       fetch("/likes", {
         method: "POST",
         headers: {
