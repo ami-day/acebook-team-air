@@ -1,7 +1,7 @@
 const TokenGenerator = require("../lib/token_generator");
 const Like = require("../models/likes");
 
-const likesController = {
+const LikesController = {
   Create: (req, res) => {
     console.log(req.body);
     const userId = req.body.userId;
@@ -18,4 +18,4 @@ const likesController = {
         }
     }
 
-module.exports = likesController;
+module.exports = LikesController;
