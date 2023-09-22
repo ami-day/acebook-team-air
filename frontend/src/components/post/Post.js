@@ -1,12 +1,29 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect} from "react";
 import Comment from "../comment/Comment";
 import Like from "../like/Like";
 import "./Post.css";
 
-const Post = ({ post, token }) => {
+const Post = ({ post, token}) => {
   const commentBox = useRef();
   const [newComment, setNewComment] = useState("");
-  const [likes, setLikes] = useState(0);
+  const [likeCount, setLikeCount] = useState(0);
+
+useEffect(() => {
+  if (token) {
+    fetch(`/likes?postId=${post._id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((response) => response.json())
+      .then(async (data) => {
+        setLikeCount(data.likes.length)
+        console.log(data);
+      });
+  }
+}, [likeCount]);
+
+
 
   const postedAt = new Date(post.createdAt);
   const formattedDate = `${postedAt.toDateString()} -
@@ -18,9 +35,37 @@ const Post = ({ post, token }) => {
     setNewComment(event.target.value);
   };
 
-  const handleLikeClick = () => {
-    setLikes(likes + 1);
+  const data = {
+    userId: post.user?.username,
+    postId: post._id,
   };
+
+  const handleLikeClick = (event) => {
+    event.preventDefault();
+    if (token) {
+      console.log(data)
+      fetch("/likes", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(data),
+      }).then((response) => {
+        if (response.status === 201) {
+          //window.location.reload();
+          console.log("like successfully added");
+          return response.json()
+        } else {
+          console.log("like not successfully added");
+        }
+        }).then((data) => {
+          setLikeCount(data.likes.length);
+        });
+    } else {
+      console.log("No token!");
+    }
+  }
 
   const submitComment = (event) => {
     event.preventDefault();
@@ -55,7 +100,7 @@ const Post = ({ post, token }) => {
   return (
     <article className="post" data-cy="post" key={post._id}>
       <div className="post-header">
-        <img class="avatar" src={post.user?.photo} />
+        <img className="avatar" src={post.user?.photo} />
         <div>
           <p className="username">{post.user.username}</p>
           <p className="datetime">{formattedDate}</p>
@@ -63,7 +108,7 @@ const Post = ({ post, token }) => {
       </div>
       <p>{post.message}</p>
       {post.photo && <img className="post-img" src={`/${post.photo}`} />}
-      <Like likes={likes} />
+      <Like likeCount={likeCount} post={post} token={token}/>
       <div className="post-buttons">
         <button onClick={handleLikeClick} className="btn btn-primary">
           Like

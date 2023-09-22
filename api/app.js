@@ -8,6 +8,7 @@ const commentsRouter = require("./routes/comments");
 const authenticationRouter = require("./routes/authentication");
 const usersRouter = require("./routes/users");
 const tokenChecker = require('./lib/tokenChecker')
+const likesRouter = require('./routes/likes');
 
 const app = express();
 
@@ -21,6 +22,7 @@ app.use(express.static(path.join(__dirname, "public")));
 // route setup
 app.use("/posts", tokenChecker, postsRouter);
 app.use("/comments", tokenChecker, commentsRouter);
+app.use("/likes", tokenChecker, likesRouter);
 app.use("/tokens", authenticationRouter);
 app.use("/users", usersRouter);
 

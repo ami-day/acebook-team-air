@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import "../like/like.css";
 
-const Like = ({ likes }) => {
+const Like = ({ likeCount, post, token}) => {
+
   return (
     <div>
-      <p className="likes">👍 {likes} </p>
-    </div>
-  );
-};
-
+    <p className="likes">👍 {likeCount} </p>
+  </div>
+);
+}
+  
 export default Like;
