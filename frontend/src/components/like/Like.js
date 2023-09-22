@@ -10,7 +10,8 @@ const Like = ({ likes, post, token}) => {
     postId: post._id,
   };
 
-  const likeHandler = () => {
+  const likeHandler = (event) => {
+    event.preventDefault();
     if (token) {
       console.log(data)
       fetch("/likes", {
@@ -22,7 +23,7 @@ const Like = ({ likes, post, token}) => {
         body: JSON.stringify(data),
       }).then((response) => {
         if (response.status === 201) {
-          window.location.reload();
+          //window.location.reload();
           console.log("like successfully added");
         } else {
           console.log("like not successfully added");
@@ -37,7 +38,7 @@ const Like = ({ likes, post, token}) => {
   return (
     <div>
     <p className="likes">👍 {likes} </p>
-    <button className="btn btn-primary" onClick={likeHandler}>like</button>
+    <button type="button" className="btn btn-primary" onClick={likeHandler}>like</button>
   </div>
 );
 }

@@ -12,7 +12,11 @@ const LikesController = {
         throw err;
       }
       const token = TokenGenerator.jsonwebtoken(req.user_id);
-      res.status(201).json({ message: "OK", token: token });
+      Like.find({postId: postId}, (error, data) => {
+        console.log(data)
+        res.status(201).json({ message: "OK", token: token, likes: data })
+      }
+      )
             }
           );
         }
