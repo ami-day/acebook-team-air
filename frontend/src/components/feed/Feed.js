@@ -3,6 +3,8 @@ import Post from "../post/Post";
 import PostForm from "../post/PostForm";
 import Navbar from "../navbar/navbar";
 import "./Feed.css";
+import FriendsCard from "../FriendsCard/FriendsCard";
+import ProfileCard from "../profile/ProfileCard";
 
 
 const Feed = ({ navigate }) => {
@@ -44,7 +46,11 @@ const Feed = ({ navigate }) => {
     return (
       <>
         <Navbar onLogout={logout} token={token} />
-        <main>
+        <main style={{display: "flex", gap: "20px"}}>
+          <div style={{flex: 1}}>
+          <ProfileCard></ProfileCard>
+          </div>
+        <div style={{flex: 1}}>
           <div className="mb-5">
             <PostForm token={token}></PostForm>
           </div>
@@ -57,6 +63,10 @@ const Feed = ({ navigate }) => {
                 <Post post={post} key={post._id} token={token} />
               ))}
             </div>
+          </div>
+          </div>
+          <div style={{flex: 1}}>
+            <FriendsCard></FriendsCard>
           </div>
         </main>
       </>
