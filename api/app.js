@@ -25,6 +25,7 @@ app.use("/comments", tokenChecker, commentsRouter);
 app.use("/likes", tokenChecker, likesRouter);
 app.use("/tokens", authenticationRouter);
 app.use("/users", usersRouter);
+app.use("/allusers", usersRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

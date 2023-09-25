@@ -1,12 +1,30 @@
 import './FriendsModal.css';
 import 'font-awesome/css/font-awesome.min.css';
+import React, { useEffect, useState } from "react";
 import FriendProfile from '../FriendsCard/FriendProfile'
 
-const FriendsModal = ({setModal}) => {
+
+const FriendsModal = ({setModal, token}) => {
+
+const [users,setUsers] = useState({});
 
 const closeButton = () => {
   setModal(false);
 }
+
+useEffect(() => {
+  if (token) {
+    fetch("/allusers", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((response) => response.json())
+      .then(async (data) => {
+        console.log(data)
+      });
+  }
+}, [users]);
 
 return (
   <div id="find-friends">
@@ -18,11 +36,7 @@ return (
   <input type="text" className="form-control form-input" placeholder="Search friends..."/>
   </div>
   <div id="friendProfile">
-  <FriendProfile></FriendProfile>
-  <FriendProfile></FriendProfile>
-  <FriendProfile></FriendProfile>
-  <FriendProfile></FriendProfile>
-  <FriendProfile></FriendProfile>
+    <FriendProfile></FriendProfile>
   </div>
 </div>        
 )

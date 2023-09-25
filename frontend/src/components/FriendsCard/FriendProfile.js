@@ -1,7 +1,7 @@
 import "./FriendProfile.css"
 import React, { useState } from "react";
 
-const FriendProfile = () => {
+const FriendProfile = ({user, key}) => {
 
     const onDivClick = () => {
         console.log("Div Clicked!");
