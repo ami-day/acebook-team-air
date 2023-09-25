@@ -12,10 +12,7 @@ return (
   <i class="fa fa-search"></i>
   <input type="text" class="form-control form-input" placeholder="Search friends..."/>
   </div>
-<div id="friend-profile">
-  <img className="avatar" src="https://avatars.githubusercontent.com/u/25744951?v=4"></img>
-  <p className="username">Username</p>
-</div>
+  <FriendProfile></FriendProfile>
 </div>        
 )
 }
