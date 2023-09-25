@@ -4,9 +4,13 @@ import FriendProfile from '../FriendsCard/FriendProfile'
 
 const FriendsModal = () => {
 
+const closeButton = () => {
+
+}
+
 return (
   <div id="find-friends">
-<button id="closebtn" type="button" className="btn-close"></button>
+<button id="closebtn" type="button" className="btn-close" onClick={closeButton}></button>
 <h1>Find Friends</h1>
 <p>This is where you can find friends!</p>
 <div className="form">
