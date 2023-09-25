@@ -19,13 +19,13 @@ const Post = ({ post, token, user }) => {
       })
         .then((response) => response.json())
         .then(async (data) => {
-          setLikeCount(() => data.likes.length);
+          setLikeCount(data.likes.length);
           // filter by signed-in user
           const filteredLikes = data.likes.filter((like) => {
             return like.userId === user._id;
           });
           if (filteredLikes.length > 0) {
-            setLiked(() => true);
+            setLiked(true);
           }
         });
     }
@@ -63,7 +63,6 @@ const Post = ({ post, token, user }) => {
       })
         .then((response) => {
           if (response.status === 201) {
-            //window.location.reload();
             console.log("like successfully added");
             return response.json();
           } else {
@@ -72,15 +71,15 @@ const Post = ({ post, token, user }) => {
         })
         .then((data) => {
           console.log("data:", data);
-          setLikeCount(() => data.likes.length);
+          setLikeCount(data.likes.length);
           const filteredLikes = data.likes.filter((like) => {
             return like.userId === user._id;
           });
           console.log("filteredLikes:", filteredLikes);
           if (filteredLikes.length > 0) {
-            setLiked(() => true);
+            setLiked(true);
           } else {
-            setLiked(() => false);
+            setLiked(false);
           }
         });
     } else {

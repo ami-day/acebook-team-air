@@ -17,6 +17,7 @@ const Comment = ({ comment, post, token, user }) => {
         .then((response) => response.json())
         .then(async (data) => {
           setLikeCount(data.likes.length);
+          // filter by signed-in user
           const filteredLikes = data.likes.filter((like) => {
             return like.userId === user._id;
           });
@@ -34,8 +35,13 @@ const Comment = ({ comment, post, token, user }) => {
         userId: user._id,
         commentId: comment._id,
       };
+      // handle change of route
+      let method = "POST";
+      if (liked) {
+        method = "DELETE";
+      }
       fetch("/likes", {
-        method: "POST",
+        method: method,
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
@@ -44,7 +50,6 @@ const Comment = ({ comment, post, token, user }) => {
       })
         .then((response) => {
           if (response.status === 201) {
-            //window.location.reload();
             console.log("like successfully added");
             return response.json();
           } else {
@@ -58,6 +63,8 @@ const Comment = ({ comment, post, token, user }) => {
           });
           if (filteredLikes.length > 0) {
             setLiked(true);
+          } else {
+            setLiked(false);
           }
         });
     } else {
