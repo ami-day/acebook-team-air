@@ -8,6 +8,7 @@ const Post = ({ post, token, user }) => {
   const [newComment, setNewComment] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [likeCount, setLikeCount] = useState(0);
+  const [liked, setLiked] = useState(false);
 
   useEffect(() => {
     if (token) {
@@ -19,6 +20,12 @@ const Post = ({ post, token, user }) => {
         .then((response) => response.json())
         .then(async (data) => {
           setLikeCount(data.likes.length);
+          const filteredLikes = data.likes.filter((like) => {
+            return like.userId === user._id;
+          });
+          if (filteredLikes.length > 0) {
+            setLiked(true);
+          }
         });
     }
   }, [likeCount]);
@@ -59,6 +66,13 @@ const Post = ({ post, token, user }) => {
         })
         .then((data) => {
           setLikeCount(data.likes.length);
+          const filteredLikes = data.likes.filter((like) => {
+            return like.userId === user._id;
+          });
+          console.log("filteredLikes:", filteredLikes);
+          if (filteredLikes.length > 0) {
+            setLiked(true);
+          }
         });
     } else {
       console.log("No token!");
@@ -114,7 +128,7 @@ const Post = ({ post, token, user }) => {
       <Like likeCount={likeCount} />
       <div className="post-buttons">
         <button onClick={handleLikeClick} className="btn btn-primary">
-          Like
+          {liked ? "Unlike" : "Like"}
         </button>
         <button
           onClick={() => {

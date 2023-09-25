@@ -2,8 +2,7 @@ const TokenGenerator = require("../lib/token_generator");
 const Like = require("../models/likes");
 
 const LikesController = {
-  Create: (req, res) => {
-    console.log("req.body", req.body);
+  Create: async (req, res) => {
     let likeData = {
       userId: req.body.userId,
     };
@@ -16,19 +15,26 @@ const LikesController = {
       likeData["commentId"] = req.body.commentId;
       filter = { commentId: req.body.commentId };
     }
-    console.log("likeData", likeData);
-
-    const like = new Like(likeData);
-    like.save((err) => {
-      if (err) {
-        throw err;
+    // wait for the data to enter database and then find()
+    await Like.find(likeData, (error, data) => {
+      if (data.length === 0) {
+        const like = new Like(likeData);
+        like.save((err) => {
+          if (err) {
+            throw err;
+          }
+        });
       }
-      const token = TokenGenerator.jsonwebtoken(req.user_id);
-      Like.find(filter, (error, data) => {
-        res.status(201).json({ message: "OK", token: token, likes: data });
-      });
+    });
+
+    const token = TokenGenerator.jsonwebtoken(req.user_id);
+    // Filter likes data either by postID or commentID
+    Like.find(filter, (error, data) => {
+      console.log("data:", data);
+      res.status(201).json({ message: "OK", token: token, likes: data });
     });
   },
+
   Index: (req, res) => {
     console.log(req.query);
     let filter = {};

@@ -4,7 +4,9 @@ import "./comments.css";
 
 const Comment = ({ comment, post, token, user }) => {
   const [likeCount, setLikeCount] = useState(0);
+  const [liked, setLiked] = useState(false);
 
+  // Get all data
   useEffect(() => {
     if (token) {
       fetch(`/likes?commentId=${comment._id}`, {
@@ -15,7 +17,12 @@ const Comment = ({ comment, post, token, user }) => {
         .then((response) => response.json())
         .then(async (data) => {
           setLikeCount(data.likes.length);
-          console.log(data);
+          const filteredLikes = data.likes.filter((like) => {
+            return like.userId === user._id;
+          });
+          if (filteredLikes.length > 0) {
+            setLiked(true);
+          }
         });
     }
   }, [likeCount]);
@@ -46,6 +53,12 @@ const Comment = ({ comment, post, token, user }) => {
         })
         .then((data) => {
           setLikeCount(data.likes.length);
+          const filteredLikes = data.likes.filter((like) => {
+            return like.userId === user._id;
+          });
+          if (filteredLikes.length > 0) {
+            setLiked(true);
+          }
         });
     } else {
       console.log("No token!");
@@ -69,7 +82,7 @@ const Comment = ({ comment, post, token, user }) => {
         <div className="info">
           <p>{formattedDate}</p>
           <p onClick={handleLikeClick} className="like">
-            Like
+            {liked ? "Unlike" : "Like"}
           </p>
           <Like likeCount={likeCount} />
         </div>
