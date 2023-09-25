@@ -48,7 +48,7 @@ const Feed = ({ navigate }) => {
     return (
       <>
         <Navbar onLogout={logout} token={token} />
-        {modal && <FriendsModal></FriendsModal>}
+        {modal && <FriendsModal setModal={setModal}></FriendsModal>}
         <main className={`${modal && "blur"}`} style={{display: "flex", gap: "20px"}}>
           <div style={{flex: 1}}>
           <ProfileCard></ProfileCard>

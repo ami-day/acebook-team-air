@@ -2,10 +2,10 @@ import './FriendsModal.css';
 import 'font-awesome/css/font-awesome.min.css';
 import FriendProfile from '../FriendsCard/FriendProfile'
 
-const FriendsModal = () => {
+const FriendsModal = ({setModal}) => {
 
 const closeButton = () => {
-
+  setModal(false);
 }
 
 return (
