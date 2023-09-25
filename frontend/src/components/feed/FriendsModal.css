@@ -9,8 +9,7 @@
     padding: 20px;
     height: 50%;
     width: 50%;
-    z-index: 3;
-    backdrop-filter: blur(20px);
+    z-index: 100;
 }
 
 body{
