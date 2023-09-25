@@ -10,6 +10,25 @@
     height: 50%;
     width: 50%;
     z-index: 100;
+    overflow: scroll;
+}
+
+#friendProfile{
+    height: auto;
+    width: auto;
+    padding-top: 20px;
+    display: flex;
+    gap:20px;
+    flex-direction: column;
+}
+
+#friendProfile .avatar{
+    height: auto;
+}
+
+#closebtn{
+    margin-left: 630px;
+
 }
 
 body{
@@ -51,8 +70,7 @@ body{
 }
 
 .left-pan i{
-   
-   padding-left: 10px;
+    padding-left: 10px;
 }
 
 .form-input{

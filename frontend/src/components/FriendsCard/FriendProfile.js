@@ -11,7 +11,7 @@ const FriendProfile = () => {
     <div onClick={onDivClick} id="friend-profile">
         <img className="avatar" src="https://avatars.githubusercontent.com/u/25744951?v=4"></img>
         <p className="username">Username</p>
-     </div>
+    </div>
     )
 }
 

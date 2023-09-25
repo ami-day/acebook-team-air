@@ -6,13 +6,20 @@ const FriendsModal = () => {
 
 return (
   <div id="find-friends">
+<button id="closebtn" type="button" className="btn-close"></button>
 <h1>Find Friends</h1>
 <p>This is where you can find friends!</p>
-<div class="form">
-  <i class="fa fa-search"></i>
-  <input type="text" class="form-control form-input" placeholder="Search friends..."/>
+<div className="form">
+  <i className="fa fa-search"></i>
+  <input type="text" className="form-control form-input" placeholder="Search friends..."/>
   </div>
+  <div id="friendProfile">
   <FriendProfile></FriendProfile>
+  <FriendProfile></FriendProfile>
+  <FriendProfile></FriendProfile>
+  <FriendProfile></FriendProfile>
+  <FriendProfile></FriendProfile>
+  </div>
 </div>        
 )
 }
