@@ -19,12 +19,13 @@ const Post = ({ post, token, user }) => {
       })
         .then((response) => response.json())
         .then(async (data) => {
-          setLikeCount(data.likes.length);
+          setLikeCount(() => data.likes.length);
+          // filter by signed-in user
           const filteredLikes = data.likes.filter((like) => {
             return like.userId === user._id;
           });
           if (filteredLikes.length > 0) {
-            setLiked(true);
+            setLiked(() => true);
           }
         });
     }
@@ -47,8 +48,13 @@ const Post = ({ post, token, user }) => {
         userId: user._id,
         postId: post._id,
       };
+      // handle change of route
+      let method = "POST";
+      if (liked) {
+        method = "DELETE";
+      }
       fetch("/likes", {
-        method: "POST",
+        method: method,
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
@@ -65,13 +71,16 @@ const Post = ({ post, token, user }) => {
           }
         })
         .then((data) => {
-          setLikeCount(data.likes.length);
+          console.log("data:", data);
+          setLikeCount(() => data.likes.length);
           const filteredLikes = data.likes.filter((like) => {
             return like.userId === user._id;
           });
           console.log("filteredLikes:", filteredLikes);
           if (filteredLikes.length > 0) {
-            setLiked(true);
+            setLiked(() => true);
+          } else {
+            setLiked(() => false);
           }
         });
     } else {

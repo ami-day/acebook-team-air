@@ -19,20 +19,20 @@ const LikesController = {
     await Like.find(likeData, (error, data) => {
       if (data.length === 0) {
         const like = new Like(likeData);
-        like.save((err) => {
+        // changed this to an async function to fix bug with data appearing on frontend
+        like.save( async (err) => { 
           if (err) {
             throw err;
           }
+          // Filter likes data either by postID or commentID
+          await Like.find(filter, (error, data) => {
+            const token = TokenGenerator.jsonwebtoken(req.user_id);
+            res.status(201).json({ message: "OK", token: token, likes: data });
+          });
         });
       }
     });
-
-    const token = TokenGenerator.jsonwebtoken(req.user_id);
-    // Filter likes data either by postID or commentID
-    Like.find(filter, (error, data) => {
-      console.log("data:", data);
-      res.status(201).json({ message: "OK", token: token, likes: data });
-    });
+    
   },
 
   Index: (req, res) => {
@@ -51,6 +51,27 @@ const LikesController = {
       res.status(201).json({ message: "OK", token: token, likes: data });
     });
   },
+
+  Delete: async (req, res) => {
+    let likeData = {
+      userId: req.body.userId,
+    };
+    let filter = {};
+
+    if (req.body.postId) {
+      likeData["postId"] = req.body.postId;
+      filter = { postId: req.body.postId };
+    } else if (req.body.commentId) {
+      likeData["commentId"] = req.body.commentId;
+      filter = { commentId: req.body.commentId };
+    }
+    await Like.deleteOne(likeData); 
+    const token = TokenGenerator.jsonwebtoken(req.user_id);
+    Like.find(filter, (error, data) => {
+      console.log(data);
+      res.status(201).json({ message: "OK", token: token, likes: data });
+    });
+  }
 };
 
 module.exports = LikesController;
