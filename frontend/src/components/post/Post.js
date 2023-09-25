@@ -1,29 +1,27 @@
-import React, { useRef, useState, useEffect} from "react";
+import React, { useRef, useState, useEffect } from "react";
 import Comment from "../comment/Comment";
 import Like from "../like/Like";
 import "./Post.css";
 
-const Post = ({ post, token}) => {
+const Post = ({ post, token, user }) => {
   const commentBox = useRef();
   const [newComment, setNewComment] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
   const [likeCount, setLikeCount] = useState(0);
 
-useEffect(() => {
-  if (token) {
-    fetch(`/likes?postId=${post._id}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    })
-      .then((response) => response.json())
-      .then(async (data) => {
-        setLikeCount(data.likes.length)
-        console.log(data);
-      });
-  }
-}, [likeCount]);
-
-
+  useEffect(() => {
+    if (token) {
+      fetch(`/likes?postId=${post._id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .then((response) => response.json())
+        .then(async (data) => {
+          setLikeCount(data.likes.length);
+        });
+    }
+  }, [likeCount]);
 
   const postedAt = new Date(post.createdAt);
   const formattedDate = `${postedAt.toDateString()} -
@@ -35,40 +33,45 @@ useEffect(() => {
     setNewComment(event.target.value);
   };
 
-  const data = {
-    userId: post.user?.username,
-    postId: post._id,
-  };
-
   const handleLikeClick = (event) => {
     event.preventDefault();
     if (token) {
-      console.log(data)
+      const likeData = {
+        userId: user._id,
+        postId: post._id,
+      };
       fetch("/likes", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify(data),
-      }).then((response) => {
-        if (response.status === 201) {
-          //window.location.reload();
-          console.log("like successfully added");
-          return response.json()
-        } else {
-          console.log("like not successfully added");
-        }
-        }).then((data) => {
+        body: JSON.stringify(likeData),
+      })
+        .then((response) => {
+          if (response.status === 201) {
+            //window.location.reload();
+            console.log("like successfully added");
+            return response.json();
+          } else {
+            console.log("like not successfully added");
+          }
+        })
+        .then((data) => {
           setLikeCount(data.likes.length);
         });
     } else {
       console.log("No token!");
     }
-  }
+  };
 
   const submitComment = (event) => {
     event.preventDefault();
+    if (newComment === "") {
+      // no comment provided
+      setErrorMessage("Comment cannot be empty");
+      return;
+    }
     // make post request to create new comment
     // ensure postid is sent along with the comment content
     const data = {
@@ -108,7 +111,7 @@ useEffect(() => {
       </div>
       <p>{post.message}</p>
       {post.photo && <img className="post-img" src={`/${post.photo}`} />}
-      <Like likeCount={likeCount} post={post} token={token}/>
+      <Like likeCount={likeCount} />
       <div className="post-buttons">
         <button onClick={handleLikeClick} className="btn btn-primary">
           Like
@@ -125,7 +128,13 @@ useEffect(() => {
       <div className="comments">
         {post.comments.length ? (
           post.comments.map((comment) => (
-            <Comment comment={comment} key={comment._id} post={post} />
+            <Comment
+              comment={comment}
+              key={comment._id}
+              post={post}
+              token={token}
+              user={user}
+            />
           ))
         ) : (
           <p className="text-center">Be the first to leave a comment</p>
@@ -140,7 +149,9 @@ useEffect(() => {
         value={newComment}
         onChange={handleCommentChange}
         placeholder="Leave a comment here..."
+        required
       />
+      <p className="error">{errorMessage}</p>
       <button onClick={submitComment} className="btn btn-primary">
         Post comment
       </button>

@@ -1,26 +1,9 @@
 import React, { useEffect, useState } from "react";
 import "./navbar.css";
 
-const Navbar = ({ onLogout, token }) => {
-  const [user, setUser] = useState("");
-
-  useEffect(() => {
-    if (token) {
-      fetch("/users", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-        .then((response) => response.json())
-        .then(async (data) => {
-          setUser(data.user);
-        });
-    }
-  }, []);
-
+const Navbar = ({ onLogout, token, user }) => {
   return (
     <nav className="navbar" id="navbar">
-      {/* <div className="container-fluid"> */}
       <a className="navbar-brand">
         <img
           className="d-inline-block align-text-top"
@@ -35,7 +18,6 @@ const Navbar = ({ onLogout, token }) => {
           Logout
         </button>
       </div>
-      {/* </div> */}
     </nav>
   );
 };

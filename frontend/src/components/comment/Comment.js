@@ -1,11 +1,57 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import Like from "../like/Like";
 import "./comments.css";
 
-const Comment = ({ comment, post }) => {
-  // const today = new Date();
-  // const postedDate = new Date(comment.createdAt);
-  // let timeDiff = today - postedDate;
-  // timeDiff = (timeDiff.toFixed() / (1000 * 60)).toPrecision(1);
+const Comment = ({ comment, post, token, user }) => {
+  const [likeCount, setLikeCount] = useState(0);
+
+  useEffect(() => {
+    if (token) {
+      fetch(`/likes?commentId=${comment._id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .then((response) => response.json())
+        .then(async (data) => {
+          setLikeCount(data.likes.length);
+          console.log(data);
+        });
+    }
+  }, [likeCount]);
+
+  const handleLikeClick = (event) => {
+    event.preventDefault();
+    if (token) {
+      const likeData = {
+        userId: user._id,
+        commentId: comment._id,
+      };
+      fetch("/likes", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(likeData),
+      })
+        .then((response) => {
+          if (response.status === 201) {
+            //window.location.reload();
+            console.log("like successfully added");
+            return response.json();
+          } else {
+            console.log("like not successfully added");
+          }
+        })
+        .then((data) => {
+          setLikeCount(data.likes.length);
+        });
+    } else {
+      console.log("No token!");
+    }
+  };
+
   const postedAt = new Date(comment.createdAt);
   const formattedDate = `${postedAt.toDateString()} 
   ${String(postedAt.getHours().toPrecision().padStart(2, "0"))}:${String(
@@ -22,7 +68,10 @@ const Comment = ({ comment, post }) => {
         </div>
         <div className="info">
           <p>{formattedDate}</p>
-          <p className="like">Like</p>
+          <p onClick={handleLikeClick} className="like">
+            Like
+          </p>
+          <Like likeCount={likeCount} />
         </div>
       </div>
     </div>

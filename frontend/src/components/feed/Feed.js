@@ -6,8 +6,7 @@ import "./Feed.css";
 import FriendsCard from "../FriendsCard/FriendsCard";
 import ProfileCard from "../profile/ProfileCard";
 
-
-const Feed = ({ navigate }) => {
+const Feed = ({ navigate, user }) => {
   const [posts, setPosts] = useState([]);
   const [token, setToken] = useState(window.localStorage.getItem("token"));
 
@@ -45,27 +44,27 @@ const Feed = ({ navigate }) => {
   if (token) {
     return (
       <>
-        <Navbar onLogout={logout} token={token} />
-        <main style={{display: "flex", gap: "20px"}}>
-          <div style={{flex: 1}}>
-          <ProfileCard></ProfileCard>
+        <Navbar onLogout={logout} token={token} user={user} />
+        <main style={{ display: "flex", gap: "20px" }}>
+          <div style={{ flex: 1 }}>
+            <ProfileCard></ProfileCard>
           </div>
-        <div style={{flex: 1}}>
-          <div className="mb-5">
-            <PostForm token={token}></PostForm>
-          </div>
-          <div>
-            <h2 style={{ color: "aliceblue" }} className="text-center">
-              Posts
-            </h2>
-            <div id="feed" role="feed" className="container">
-              {posts.map((post) => (
-                <Post post={post} key={post._id} token={token} />
-              ))}
+          <div style={{ flex: 1 }}>
+            <div className="mb-5">
+              <PostForm token={token}></PostForm>
+            </div>
+            <div>
+              <h2 style={{ color: "aliceblue" }} className="text-center">
+                Posts
+              </h2>
+              <div id="feed" role="feed" className="container">
+                {posts.map((post) => (
+                  <Post post={post} key={post._id} token={token} user={user} />
+                ))}
+              </div>
             </div>
           </div>
-          </div>
-          <div style={{flex: 1}}>
+          <div style={{ flex: 1 }}>
             <FriendsCard></FriendsCard>
           </div>
         </main>
