@@ -1,4 +1,4 @@
-const User = require("../models/users");
+const User = require("../models/user");
 
 const AllUsersController = {
     Index: (req, res) => {
@@ -7,7 +7,6 @@ const AllUsersController = {
             if (err) {
               throw err;
             }
-            console.log(users)
             res.status(200).json({
               users: users
             });
