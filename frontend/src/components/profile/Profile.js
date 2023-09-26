@@ -5,8 +5,7 @@ import Navbar from "../navbar/navbar";
 import ProfileCard from "./ProfileCard";
 import "./Profile.css";
 
-
-const Profile = ({ navigate }) => {
+const Profile = ({ navigate, user }) => {
   const [posts, setPosts] = useState([]);
   const [token, setToken] = useState(window.localStorage.getItem("token"));
 
@@ -44,7 +43,7 @@ const Profile = ({ navigate }) => {
   if (token) {
     return (
       <>
-        <Navbar onLogout={logout} token={token} />
+        <Navbar onLogout={logout} token={token} user={user} />
         <main>
           <ProfileCard />
           <div className="mb-5">
@@ -56,7 +55,7 @@ const Profile = ({ navigate }) => {
             </h2>
             <div id="profile" role="profile" className="container">
               {posts.map((post) => (
-                <Post post={post} key={post._id} token={token} />
+                <Post post={post} key={post._id} token={token} user={user} />
               ))}
             </div>
           </div>
