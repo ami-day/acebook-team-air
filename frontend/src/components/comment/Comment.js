@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Like from "../like/Like";
 import "./comments.css";
+import Avatar from "../user/Avatar";
 
 const Comment = ({ comment, post, token, user }) => {
   const [likeCount, setLikeCount] = useState(0);
@@ -8,6 +9,7 @@ const Comment = ({ comment, post, token, user }) => {
 
   // Get all data
   useEffect(() => {
+    console.log(comment)
     if (token) {
       fetch(`/likes?commentId=${comment._id}`, {
         headers: {
@@ -80,7 +82,7 @@ const Comment = ({ comment, post, token, user }) => {
 
   return (
     <div className="comment">
-      <img className="avatar" src={post.user?.photo} />
+      <Avatar size={35} user={comment.user}/>
       <div>
         <div className="details">
           <p className="username">{comment.user.username}</p>

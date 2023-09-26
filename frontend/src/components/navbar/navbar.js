@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./navbar.css";
+import Avatar from "../user/Avatar";
 
 const Navbar = ({ onLogout, token, user }) => {
   return (
@@ -13,8 +14,8 @@ const Navbar = ({ onLogout, token, user }) => {
       </a>
       <div className="navbar-right">
         <h5>{user.username}</h5>
-        <img className="avatar" src={user.photo} />
-        <button className="btn btn-danger" onClick={onLogout}>
+        <Avatar size={60} user={user}/>
+        <button className="logout btn btn-danger" onClick={onLogout}>
           Logout
         </button>
       </div>
