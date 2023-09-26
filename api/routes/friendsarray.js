@@ -5,6 +5,6 @@ const tokenChecker = require("../lib/tokenChecker")
 const FollowController = require("../controllers/friendsarray");
 
 router.post("/", tokenChecker, FollowController.Create);
-router.patch("/", tokenChecker, FollowController.Update);
+router.put("/", tokenChecker, FollowController.Update);
 
 module.exports = router;

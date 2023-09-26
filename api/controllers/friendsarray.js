@@ -32,8 +32,14 @@ const FollowController = {
 
         User.findByIdAndUpdate(
             req.user_id,
-            { $pull: { "friends_array": req.body.userId } }
-        );
+            { $pull: { friends_array: { $in: [req.body.userId] }  }},
+            { new: true },
+            (error) => {
+              if (error) {
+                throw error;
+              }
+            }
+        )
 
         const token = TokenGenerator.jsonwebtoken(req.user_id);
         await User.findById(req.user_id).exec((err, data) => {

@@ -18,7 +18,7 @@ const FriendProfile = ({user, token}) => {
 
         let method = "POST";
         if (followed) {
-            method = "PATCH";
+            method = "PUT";
           }
     
         if (token) {
