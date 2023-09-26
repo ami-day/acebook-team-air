@@ -27,8 +27,6 @@ useEffect(() => {
   }
 }, []);
 
-// console.log("users object:", users)
-// console.log("users.comments", users.comments)
 
 return (
   <div id="find-friends">
