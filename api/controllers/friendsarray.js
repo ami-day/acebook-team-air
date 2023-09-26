@@ -22,10 +22,24 @@ const FollowController = {
                     throw error;
                 }
             })
-            const token = TokenGenerator.jsonwebtoken(req.user_id);
-            res.status(201).json({ message: "OK", token: token });
+        const token = TokenGenerator.jsonwebtoken(req.user_id);
+        await User.findById(req.user_id).exec((err, data) => {
+            res.status(201).json({ message: "OK", token: token, user: data })
+        });
+    },
 
-    }
-}
+    Update: async (req, res) => {
+
+        User.findByIdAndUpdate(
+            req.user_id,
+            { $pull: { "friends_array": req.body.userId } }
+        );
+
+        const token = TokenGenerator.jsonwebtoken(req.user_id);
+        await User.findById(req.user_id).exec((err, data) => {
+            res.status(201).json({ message: "OK", token: token, user: data })
+        });
+      }
+    };
 
 module.exports = FollowController;
