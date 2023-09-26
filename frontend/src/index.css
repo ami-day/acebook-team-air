@@ -50,3 +50,7 @@ form {
   height: 50px;
   border-radius: 50%;
 }
+
+#transparent { 
+  background-color: transparent;
+}
