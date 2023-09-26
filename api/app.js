@@ -10,6 +10,7 @@ const usersRouter = require("./routes/users");
 const tokenChecker = require('./lib/tokenChecker')
 const likesRouter = require('./routes/likes');
 const allusersRouter = require('./routes/allusers');
+const friendsarrayRouter = require("./routes/friendsArray");
 
 const app = express();
 
@@ -27,6 +28,7 @@ app.use("/likes", tokenChecker, likesRouter);
 app.use("/tokens", authenticationRouter);
 app.use("/users", usersRouter);
 app.use("/allusers", allusersRouter);
+app.use("/friendsarray", friendsarrayRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

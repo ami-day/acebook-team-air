@@ -27,3 +27,5 @@ const FollowController = {
 
     }
 }
+
+module.exports = FollowController;

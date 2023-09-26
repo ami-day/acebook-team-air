@@ -40,7 +40,7 @@ return (
   <div id="friendProfile">
     {users && users.map((user) => {
                 console.log("user:", user)
-                return <FriendProfile user={user} key={user._id} />
+                return <FriendProfile user={user} token={token} key={user._id} />
               })}
   </div>
 </div>        
