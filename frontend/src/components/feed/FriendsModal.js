@@ -6,7 +6,7 @@ import FriendProfile from '../FriendsCard/FriendProfile'
 
 const FriendsModal = ({setModal, token}) => {
 
-const [users,setUsers] = useState([]);
+const [users,setUsers] = useState(null);
 
 const closeButton = () => {
   setModal(false);
@@ -21,12 +21,14 @@ useEffect(() => {
     })
       .then((response) => response.json())
       .then(async (data) => {
+        console.log("data:", data)
         setUsers(data.users)
       });
   }
 }, []);
 
-console.log(users)
+// console.log("users object:", users)
+// console.log("users.comments", users.comments)
 
 return (
   <div id="find-friends">
@@ -38,9 +40,10 @@ return (
   <input type="text" className="form-control form-input" placeholder="Search friends..."/>
   </div>
   <div id="friendProfile">
-    {users && users.map((user) => (
-                <FriendProfile user={user} key={user._id} />
-              ))}
+    {users && users.map((user) => {
+                console.log("user:", user)
+                return <FriendProfile user={user} key={user._id} />
+              })}
   </div>
 </div>        
 )

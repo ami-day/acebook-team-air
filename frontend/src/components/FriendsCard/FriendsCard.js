@@ -16,10 +16,11 @@ const FriendsCard = ({setModal}) => {
                 <button className="btn btn-primary" onClick={showModal}>Find Friends</button>
             </div>
             <div id="friend-profiles">
+                {/* // Need to add user prop before adding between tags */}
+                {/* <FriendProfile></FriendProfile>
                 <FriendProfile></FriendProfile>
                 <FriendProfile></FriendProfile>
-                <FriendProfile></FriendProfile>
-                <FriendProfile></FriendProfile>
+                <FriendProfile></FriendProfile> */}
             </div>
         </div>
         )
