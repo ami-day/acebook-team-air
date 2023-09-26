@@ -7,6 +7,8 @@ import FriendProfile from '../FriendsCard/FriendProfile'
 const FriendsModal = ({setModal, token}) => {
 
 const [users,setUsers] = useState(null);
+const [filteredUsers,setFilteredUsers] = useState(null);
+const [searchField, setSearchField] = useState("");
 
 const closeButton = () => {
   setModal(false);
@@ -21,12 +23,28 @@ useEffect(() => {
     })
       .then((response) => response.json())
       .then(async (data) => {
-        console.log("data:", data)
         setUsers(data.users)
       });
   }
 }, []);
 
+  const handleSearch = e => {
+    setSearchField(e.target.value);
+  };
+
+  useEffect(() => {
+    if(users) {
+  const filteredUsers = users.filter(
+    (user) => {
+      return(
+        user
+        .username
+        .toLowerCase()
+        .includes(searchField.toLowerCase())
+      )
+    })
+    setFilteredUsers(filteredUsers);
+  }},[searchField,users]);
 
 return (
   <div id="find-friends">
@@ -35,13 +53,12 @@ return (
 <p>This is where you can find friends!</p>
 <div className="form">
   <i className="fa fa-search"></i>
-  <input type="text" className="form-control form-input" placeholder="Search friends..."/>
+  <input onChange={handleSearch} type="text" className="form-control form-input" placeholder="Search friends..."/>
   </div>
   <div id="friendProfile">
-    {users && users.map((user) => {
-                console.log("user:", user)
-                return <FriendProfile user={user} token={token} key={user._id} />
-              })}
+    {filteredUsers && filteredUsers.map((user) => (
+    <FriendProfile user={user} token={token} key={user._id} />
+    ))}
   </div>
 </div>        
 )
