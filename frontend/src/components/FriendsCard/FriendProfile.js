@@ -1,3 +1,4 @@
+import Avatar from "../user/Avatar";
 import "./FriendProfile.css"
 import React, { useEffect, useState } from "react";
 
@@ -37,7 +38,7 @@ const FriendProfile = ({user, token}) => {
     
     return (
         <div id="friend-profile">
-            {user.photo? (<img className="avatar" src={user.photo}></img>) : <div className="fallback" style={{backgroundColor: `${random_color}`}}>{user.username[0].toUpperCase()}</div>} 
+            <Avatar size={120} user={user}/> 
             <p className="username">{user.username}</p>
             <button className="btn modal-btn btn-primary" onClick={onButtonClick}>Follow Friend</button>
         </div>

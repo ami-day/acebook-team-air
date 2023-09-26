@@ -9,7 +9,6 @@ const Comment = ({ comment, post, token, user }) => {
 
   // Get all data
   useEffect(() => {
-    console.log(comment)
     if (token) {
       fetch(`/likes?commentId=${comment._id}`, {
         headers: {

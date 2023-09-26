@@ -13,7 +13,7 @@ const Navbar = ({ onLogout, token, user }) => {
         AceBook
       </a>
       <div className="navbar-right">
-        <h5>{user.username}</h5>
+        <h5>{user && user.username}</h5>
         <Avatar size={60} user={user} />
         <button className="logout btn btn-danger" onClick={onLogout}>
           Logout
