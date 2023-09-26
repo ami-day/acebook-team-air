@@ -5,10 +5,12 @@ import Navbar from "../navbar/navbar";
 import "./Feed.css";
 import FriendsCard from "../FriendsCard/FriendsCard";
 import ProfileCard from "../profile/ProfileCard";
+import FriendsModal from "./FriendsModal";
 
 const Feed = ({ navigate, user }) => {
   const [posts, setPosts] = useState([]);
   const [token, setToken] = useState(window.localStorage.getItem("token"));
+  const [modal, setModal] = useState(false);
 
   useEffect(() => {
     if (token) {
@@ -45,7 +47,13 @@ const Feed = ({ navigate, user }) => {
     return (
       <>
         <Navbar onLogout={logout} token={token} user={user} />
-        <main style={{ display: "flex", gap: "20px" }}>
+        {modal && (
+          <FriendsModal setModal={setModal} token={token}></FriendsModal>
+        )}
+        <main
+          className={`${modal && "blur"}`}
+          style={{ display: "flex", gap: "20px" }}
+        >
           <div style={{ flex: 1 }}>
             <ProfileCard></ProfileCard>
           </div>
@@ -65,7 +73,7 @@ const Feed = ({ navigate, user }) => {
             </div>
           </div>
           <div style={{ flex: 1 }}>
-            <FriendsCard></FriendsCard>
+            <FriendsCard setModal={setModal}></FriendsCard>
           </div>
         </main>
       </>
