@@ -11,6 +11,7 @@ const [filteredUsers,setFilteredUsers] = useState(null);
 const [searchField, setSearchField] = useState("");
 
 const closeButton = () => {
+  window.location.reload();
   setModal(false);
 }
 
