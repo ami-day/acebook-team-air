@@ -10,6 +10,7 @@ const Post = ({ post, token, user }) => {
   const [errorMessage, setErrorMessage] = useState("");
   const [likeCount, setLikeCount] = useState(0);
   const [liked, setLiked] = useState(false);
+  const [message, setMessage] = useState(post.message); 
 
   useEffect(() => {
     if (token) {
@@ -123,6 +124,37 @@ const Post = ({ post, token, user }) => {
     }
   };
 
+  // Update post handler
+  const handlePostUpdate = (postId, newMessage) => {
+    if (token) {
+      const newMessage = {
+        postId: post._id,
+        message: newMessage,
+      };
+    
+    fetch(`/posts/${postId}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(newMessage)
+    })
+    .then((response) => {
+      if (response.status === 200) {
+        console.log("Post update successful:", response.data);
+        return response.json();
+      } else {
+        console.log("Post update failed.");
+      }
+    })
+    .then((data => {
+      // Update message in post component (triggered by state change)
+      setMessage(data.newMessage);
+    }))
+    }
+  }
+
   return (
     <article className="post" data-cy="post" key={post._id}>
       <div className="post-header">
@@ -132,7 +164,7 @@ const Post = ({ post, token, user }) => {
           <p className="datetime">{formattedDate}</p>
         </div>
       </div>
-      <p>{post.message}</p>
+      <p>{message}</p>
       {post.photo && <img className="post-img" src={`/${post.photo}`} />}
       <Like likeCount={likeCount} />
       <div className="post-buttons">
