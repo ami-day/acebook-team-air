@@ -46,6 +46,7 @@ const FollowController = {
             res.status(201).json({ message: "OK", token: token, user: data })
         });
       }
-    };
+
+};
 
 module.exports = FollowController;
