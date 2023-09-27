@@ -51,6 +51,38 @@ const PostsController = {
       res.status(201).json({ message: "OK", token: token });
     });
   },
-};
+
+  Update: (req, res) => {
+    const id = req.params.id; // get post ID from URL
+    const newMessage = req.body.message;
+    const newPhoto = req.body.photo;
+    const updatedData = {};  // to hold update (message and/or photo)
+
+    if (newMessage) {
+      updatedData.message = newMessage;
+    } 
+    if (newPhoto) {
+      updatedData.photo = newPhoto;
+    }
+    if (!newMessage && !newPhoto) {
+      return res.status(400).json({error: 'No updates provided'})
+    }
+    /* .findByIdAndUpdate():
+    Params: post id, updatedData, config object to return new post,
+    async function that takes in the return data (post) or an error  */
+    Post.findByIdAndUpdate(id, updatedData, {new: true}, 
+      (err, post) => {  // callback function to handle update result
+        if (err){
+          console.log(err);
+          return res.status(400).json(err);
+        }
+        else{
+            console.log("Post updated");
+            return res.status(200).json({message: "OK"}, post)
+        }
+    },
+    )
+  },
+}
 
 module.exports = PostsController;
