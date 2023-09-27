@@ -6,17 +6,24 @@ const FriendProfile = ({user, token}) => {
     const colors = ['rgb(165, 197, 220)','#F0F7D4','#B2D732','#347B98','#e6db74','#f7cac9','#955251','#B565A7','#009B77','#D65076'];
     const random_color = colors[Math.floor(Math.random() * colors.length)];
 
+    const [followed, setFollowed] = useState(false);
+
     const onButtonClick = (event) => {
-        console.log("Clicked!");
-        console.log(user._id);
+
         event.preventDefault();
+
         const data = {
-        user_id: user._id,
+        userId: user._id,
         };
+
+        let method = "POST";
+        if (followed) {
+            method = "PUT";
+          }
     
         if (token) {
             fetch("/friendsarray", {
-            method: "POST",
+            method: method,
             headers: {
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${token}`,
@@ -28,18 +35,35 @@ const FriendProfile = ({user, token}) => {
             } else {
                 console.log("friend not successfully added");
             }
+            return response.json();
+        }).then((data) => {
+            const filteredFollows = data.user.friends_array.filter((friend) => {
+                return friend === user._id;
+              });
+              console.log(filteredFollows)
+              if (filteredFollows.length > 0) {
+                setFollowed(true);
+              } else {
+                setFollowed(false);
+              }
         });
         } else {
             console.log("No token!");
         }
     };
 
-    
+    let buttonName = "";
+    if(followed) {
+        buttonName = "Followed"
+    } else {
+        buttonName = "Follow Friend"
+    }
+
     return (
         <div id="friend-profile">
             {user.photo? (<img className="avatar" src={user.photo}></img>) : <div className="fallback" style={{backgroundColor: `${random_color}`}}>{user.username[0].toUpperCase()}</div>} 
             <p className="username">{user.username}</p>
-            <button className="btn modal-btn btn-primary" onClick={onButtonClick}>Follow Friend</button>
+            <button className="btn modal-btn btn-primary" onClick={onButtonClick}>{buttonName}</button>
         </div>
     );
     }
