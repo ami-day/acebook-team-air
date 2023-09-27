@@ -1,11 +1,39 @@
 const express = require("express");
 const router = express.Router();
-const tokenChecker = require("../lib/tokenChecker")
-
+const multer = require("multer");
+const { v4: uuidv4 } = require("uuid");
+const path = require("path");
+const tokenChecker = require("../lib/tokenChecker");
 const UsersController = require("../controllers/users");
 
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "./public/avatars");
+  },
+  filename: (req, file, cb) => {
+    cb(null, uuidv4() + "-" + Date.now() + path.extname(file.originalname));
+  },
+});
 
-  router.post("/", UsersController.Create);
-  router.get("/", tokenChecker, UsersController.Index)
+const fileFilter = (req, file, cb) => {
+  console.log(" file", file);
+  const allowedTypes = ["image/jpeg", "image/jpg", "image/png"];
+  if (allowedTypes.includes(file.mimetype)) {
+    cb(null, true);
+  } else {
+    cb(null, false);
+  }
+};
+
+let upload = multer({ storage, fileFilter });
+
+router.post("/", UsersController.Create);
+router.get("/", tokenChecker, UsersController.Index);
+router.patch(
+  "/:id",
+  tokenChecker,
+  upload.single("avatar"),
+  UsersController.Update
+);
 
 module.exports = router;

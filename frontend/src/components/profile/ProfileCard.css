@@ -2,18 +2,17 @@
     height: 100vh;
 }
 
-#profile-card img {
+img {
     width: 100%;
 }
 
-#profile-card .avatar, .fallback-avatar {
-    width: 300px;
-    height: 300px;
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translateY(-50%) translateX(-50%);
-    margin-bottom: 160px;
+#profile-card .avatar,
+#profile-card .fallback {
+    /* position: absolute; */
+    /* top: 0;
+    margin-inline: auto;
+    transform: translateY(-50%);
+    transform-origin: 50% 0; */
 }
 
 #profile-card .details {
@@ -23,6 +22,9 @@
     background-color: aliceblue;
     text-align: center;
     border-radius: 0 0 20px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .photo-images {
@@ -31,20 +33,30 @@
     gap: 15px;
 }
 
-.photo-images > * {
+.photo-images>* {
     border-radius: 15px;
     aspect-ratio: 1;
-    object-fit: cover; 
+    object-fit: cover;
 }
 
 .cover-photo {
     border-radius: 20px 20px 0 0;
 }
 
-.fallback-avatar {
-    display: grid;
-    place-items: center;
-    background-color: rgb(165, 197, 220);
+.fa-pencil-square-o {
+    cursor: pointer;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: aliceblue;
     border-radius: 50%;
-    font-size: 10rem;
+    padding: 10px;
+}
+
+.avatar-container {
+    position: absolute;
+    top: 0;
+    margin-inline: auto;
+    transform: translateY(-50%);
+    transform-origin: 50% 0;
 }

@@ -2,6 +2,7 @@ import React, { useRef, useState, useEffect } from "react";
 import Comment from "../comment/Comment";
 import Like from "../like/Like";
 import "./Post.css";
+import Avatar from "../user/Avatar";
 
 const Post = ({ post, token, user }) => {
   const commentBox = useRef();
@@ -125,7 +126,7 @@ const Post = ({ post, token, user }) => {
   return (
     <article className="post" data-cy="post" key={post._id}>
       <div className="post-header">
-        <img className="avatar" src={post.user?.photo} />
+        <Avatar size={50} user={post.user}/>
         <div>
           <p className="username">{post.user.username}</p>
           <p className="datetime">{formattedDate}</p>
