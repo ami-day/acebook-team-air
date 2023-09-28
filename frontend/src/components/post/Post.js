@@ -4,7 +4,7 @@ import Like from "../like/Like";
 import "./Post.css";
 import Avatar from "../user/Avatar";
 
-const Post = ({ post, token, user }) => {
+const Post = ({ post, token, user, setPosts }) => {
   const commentBox = useRef();
   const [newComment, setNewComment] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -110,14 +110,29 @@ const Post = ({ post, token, user }) => {
           Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(data),
-      }).then((response) => {
-        if (response.status === 201) {
-          window.location.reload();
-          console.log("Post successfully added");
-        } else {
-          console.log("Post not successfully added");
-        }
-      });
+      })
+        .then((response) => {
+          if (response.status === 201) {
+            console.log("Comment successfully added");
+            return response.json();
+          } else {
+            console.log("Comment not successfully added");
+          }
+        })
+        .then((data) => {
+          console.log(data.comment);
+          // add created comment to posts array
+          setPosts((prev) => {
+            return prev.map((prevPost) => {
+              if (prevPost._id === post._id) {
+                prevPost.comments.push(data.comment);
+                console.log(prevPost);
+              }
+              return prevPost;
+            });
+          });
+          setNewComment("");
+        });
     } else {
       console.log("No token!");
     }
@@ -126,7 +141,7 @@ const Post = ({ post, token, user }) => {
   return (
     <article className="post" data-cy="post" key={post._id}>
       <div className="post-header">
-        <Avatar size={50} user={post.user}/>
+        <Avatar size={50} user={post.user} />
         <div>
           <p className="username">{post.user.username}</p>
           <p className="datetime">{formattedDate}</p>

@@ -13,7 +13,6 @@ import {
 } from "react-router-dom";
 
 const App = () => {
-  const defaultUser = { username: " " };
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(window.localStorage.getItem("token"));
 

@@ -2,25 +2,10 @@ import React, { useState, useEffect, useRef } from "react";
 import "./ProfileCard.css";
 import Avatar from "../user/Avatar";
 
-const ProfileCard = ({}) => {
+const ProfileCard = ({ user }) => {
   const inputRef = useRef();
-  const [user, setUser] = useState();
   const [token, setToken] = useState(window.localStorage.getItem("token"));
   const [newAvatar, setNewAvatar] = useState(null);
-
-  useEffect(() => {
-    if (token) {
-      fetch("/users", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-        .then((response) => response.json())
-        .then(async (data) => {
-          setUser(data.user);
-        });
-    }
-  }, []);
 
   const handleAvatarChange = (event) => {
     console.log(event.target.files[0]);
@@ -28,7 +13,6 @@ const ProfileCard = ({}) => {
   };
 
   useEffect(() => {
-    console.log(newAvatar);
     if (newAvatar) {
       const formData = new FormData();
       formData.append("avatar", newAvatar);
@@ -80,10 +64,6 @@ const ProfileCard = ({}) => {
 
         <h3>photos</h3>
         <div className="photo-images">
-          <img src="https://images.unsplash.com/photo-1526800544336-d04f0cbfd700?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80" />
-          <img src="https://images.unsplash.com/photo-1526800544336-d04f0cbfd700?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80" />
-          <img src="https://images.unsplash.com/photo-1526800544336-d04f0cbfd700?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80" />
-          <img src="https://images.unsplash.com/photo-1526800544336-d04f0cbfd700?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80" />
           <img src="https://images.unsplash.com/photo-1526800544336-d04f0cbfd700?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80" />
           <img src="https://images.unsplash.com/photo-1526800544336-d04f0cbfd700?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80" />
           <img src="https://images.unsplash.com/photo-1526800544336-d04f0cbfd700?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80" />

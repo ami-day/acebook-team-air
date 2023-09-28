@@ -43,7 +43,7 @@ const Feed = ({ navigate, user }) => {
     navigate("/login");
   };
 
-  if (token) {
+  if (user) {
     return (
       <>
         <Navbar onLogout={logout} token={token} user={user} />
@@ -59,7 +59,7 @@ const Feed = ({ navigate, user }) => {
           </div>
           <div style={{ flex: 1 }}>
             <div className="mb-5">
-              <PostForm token={token}></PostForm>
+              <PostForm token={token} setPosts={setPosts}></PostForm>
             </div>
             <div>
               <h2 style={{ color: "aliceblue" }} className="text-center">
@@ -67,7 +67,13 @@ const Feed = ({ navigate, user }) => {
               </h2>
               <div id="feed" role="feed" className="container">
                 {posts.map((post) => (
-                  <Post post={post} key={post._id} token={token} user={user} />
+                  <Post
+                    post={post}
+                    key={post._id}
+                    token={token}
+                    user={user}
+                    setPosts={setPosts}
+                  />
                 ))}
               </div>
             </div>
@@ -78,8 +84,6 @@ const Feed = ({ navigate, user }) => {
         </main>
       </>
     );
-  } else {
-    navigate("/login");
   }
 };
 
