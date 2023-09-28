@@ -3,6 +3,7 @@ import Comment from "../comment/Comment";
 import Like from "../like/Like";
 import "./Post.css";
 import Avatar from "../user/Avatar";
+import EditPostModal from "./EditPostModal"; 
 
 const Post = ({ post, token, user }) => {
   const commentBox = useRef();
@@ -10,7 +11,10 @@ const Post = ({ post, token, user }) => {
   const [errorMessage, setErrorMessage] = useState("");
   const [likeCount, setLikeCount] = useState(0);
   const [liked, setLiked] = useState(false);
-  const [message, setMessage] = useState(post.message); 
+  const [message, setMessage] = useState(post.message);
+  const [showModal, setShowModal] = useState(false);
+
+  const handleShowModal = () => setShowModal(true);
 
   useEffect(() => {
     if (token) {
@@ -124,41 +128,10 @@ const Post = ({ post, token, user }) => {
     }
   };
 
-  // Update post handler
-  const handlePostUpdate = (postId, newMessage) => {
-    if (token) {
-      const newMessage = {
-        postId: post._id,
-        message: newMessage,
-      };
-    
-    fetch(`/posts/${postId}`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify(newMessage)
-    })
-    .then((response) => {
-      if (response.status === 200) {
-        console.log("Post update successful:", response.data);
-        return response.json();
-      } else {
-        console.log("Post update failed.");
-      }
-    })
-    .then((data => {
-      // Update message in post component (triggered by state change)
-      setMessage(data.newMessage);
-    }))
-    }
-  }
-
   return (
     <article className="post" data-cy="post" key={post._id}>
       <div className="post-header">
-        <Avatar size={50} user={post.user}/>
+        <Avatar size={50} user={post.user} />
         <div>
           <p className="username">{post.user.username}</p>
           <p className="datetime">{formattedDate}</p>
@@ -171,6 +144,9 @@ const Post = ({ post, token, user }) => {
         <button onClick={handleLikeClick} className="btn btn-primary">
           {liked ? "Unlike" : "Like"}
         </button>
+        <button onClick={handleShowModal} className="btn btn-primary">
+          Edit Post
+        </button>
         <button
           onClick={() => {
             commentBox.current.focus();
@@ -180,6 +156,16 @@ const Post = ({ post, token, user }) => {
           Comment
         </button>
       </div>
+      
+      <EditPostModal
+        showModal={showModal}
+        handleClose={() => setShowModal(false)}
+        post={post}
+        token={token}
+        setShowModal={setShowModal}
+        setMessage={setMessage} // change the message from inside the modal
+      />
+      
       <div className="comments">
         {post.comments.length ? (
           post.comments.map((comment) => (
