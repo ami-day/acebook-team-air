@@ -9,7 +9,6 @@ const FriendsModal = ({ setModal, token, user, myFriends, setMyFriends }) => {
   const [searchField, setSearchField] = useState("");
 
   const closeButton = () => {
-    // window.location.reload();
     setModal(false);
   };
 

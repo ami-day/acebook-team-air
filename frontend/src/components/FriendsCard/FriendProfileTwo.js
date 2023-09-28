@@ -1,6 +1,6 @@
+import React from "react";
 import Avatar from "../user/Avatar";
 import "./FriendProfile.css";
-import React, { useEffect, useState } from "react";
 
 const FriendProfileTwo = ({ token, friend }) => {
   return (

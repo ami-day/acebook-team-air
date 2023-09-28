@@ -1,8 +1,8 @@
 import "./FriendsCard.css";
 import React, { useEffect, useState } from "react";
-import FriendProfileTwo from "./FriendProfileTwo";
+import FriendProfile from "./FriendProfile";
 
-const FriendsCard = ({ setModal, token, user, myFriends }) => {
+const FriendsCard = ({ setModal, token, user, myFriends, setMyFriends }) => {
   return (
     <div id="friends-card">
       <div id="card-btns">
@@ -13,11 +13,13 @@ const FriendsCard = ({ setModal, token, user, myFriends }) => {
       </div>
       <div id="friend-profiles">
         {myFriends.map((friend) => (
-          <FriendProfileTwo
+          <FriendProfile
             token={token}
             friend={friend}
             key={friend._id}
-          ></FriendProfileTwo>
+            myFriends={myFriends}
+            setMyFriends={setMyFriends}
+          ></FriendProfile>
         ))}
       </div>
     </div>
