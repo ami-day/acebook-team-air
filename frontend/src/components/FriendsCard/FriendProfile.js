@@ -1,3 +1,4 @@
+import Avatar from "../user/Avatar";
 import "./FriendProfile.css"
 import React, { useEffect, useState } from "react";
 
@@ -7,6 +8,25 @@ const FriendProfile = ({user, token}) => {
     const random_color = colors[Math.floor(Math.random() * colors.length)];
 
     const [followed, setFollowed] = useState(false);
+    const [friends, setFriends] = useState([]);
+
+    useEffect(() => {
+        if (token) {
+            fetch("/users", {
+            headers: {
+            Authorization: `Bearer ${token}`,
+            },
+            })
+            .then((response) => response.json())
+            .then(async (data) => {
+                setFriends(data.user.friends_array)
+                if(data.user.friends_array.includes(user._id)) {
+                    setFollowed(true)
+                } else {setFollowed(false)}
+                }
+                );
+            }
+        }, []);
 
     const onButtonClick = (event) => {
 
@@ -52,18 +72,11 @@ const FriendProfile = ({user, token}) => {
         }
     };
 
-    let buttonName = "";
-    if(followed) {
-        buttonName = "Followed"
-    } else {
-        buttonName = "Follow Friend"
-    }
-
     return (
         <div id="friend-profile">
-            {user.photo? (<img className="avatar" src={user.photo}></img>) : <div className="fallback" style={{backgroundColor: `${random_color}`}}>{user.username[0].toUpperCase()}</div>} 
+            <Avatar size={120} user={user}/> 
             <p className="username">{user.username}</p>
-            <button className="btn modal-btn btn-primary" onClick={onButtonClick}>{buttonName}</button>
+            <button className="btn modal-btn btn-primary" onClick={onButtonClick}>{followed?"Followed":"Follow Friend"}</button>
         </div>
     );
     }

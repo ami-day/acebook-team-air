@@ -27,6 +27,30 @@ const UsersController = {
       });
     });
   },
+
+  Update: (req, res) => {
+    const userId = req.params.id;
+    console.log("req file", req.file);
+    let photo = "";
+    if (req.file) {
+      photo = req.file.filename;
+    }
+
+    console.log("photo", photo);
+    User.findByIdAndUpdate(
+      userId,
+      { photo: photo },
+      { new: true },
+      (err, updatedUser) => {
+        if (err) {
+          throw err;
+        }
+        res
+          .status(200)
+          .json({ message: "Avatar photo updated!", newUser: updatedUser });
+      }
+    );
+  },
 };
 
 module.exports = UsersController;

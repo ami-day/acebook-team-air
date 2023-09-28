@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+const Filter = require('bad-words');
 
 const SignUpForm = ({ navigate }) => {
   const [email, setEmail] = useState("");
@@ -8,9 +9,14 @@ const SignUpForm = ({ navigate }) => {
   const [photo, setPhoto] = useState("");
   const [errorMessage, setErrorMessage] = useState("")
   const [confirmPassword, setConfirmPassword] = useState("");
+  const filter = new Filter();
   
   const handleSubmit = async (event) => {
     event.preventDefault()
+    if (filter.isProfane(username)) {
+      setErrorMessage("Username contains profanity. Please choose a different username.");
+      return;
+    }
     if(!passwordValiding(password)){
       setErrorMessage("Password not valid. Password must include an uppercase and lowercase character, a special character (@$!%*?&) and be a minimum of 8 characters")
     }else if(password != confirmPassword){

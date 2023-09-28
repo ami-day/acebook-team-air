@@ -2,13 +2,18 @@ import React, { useState, useEffect } from "react";
 import Like from "../like/Like";
 import "./comments.css";
 import Delete from "../delete/Delete";
+import Avatar from "../user/Avatar";
+const Filter = require('bad-words');
+const filter = new Filter();
 
 const Comment = ({ comment, post, token, user, setPosts}) => {
   const [likeCount, setLikeCount] = useState(0);
   const [liked, setLiked] = useState(false);
 
-  
-
+//filters rude words and replaces them with *
+  const ReplaceRudeWords = (comment) => {
+    return filter.clean(comment);
+};
 
   // Get all data
   useEffect(() => {
@@ -84,11 +89,11 @@ const Comment = ({ comment, post, token, user, setPosts}) => {
 
   return (
     <div className="comment">
-      <img className="avatar" src={post.user?.photo} />
+      <Avatar size={35} user={comment.user}/>
       <div>
         <div className="details">
           <p className="username">{comment.user.username}</p>
-          <p>{comment.content}</p>
+          <p>{ReplaceRudeWords(comment.content)}</p>
         </div>
         <Delete commentId={comment._id} token={token} setPosts={setPosts} />
         <div className="info">

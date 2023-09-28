@@ -11,7 +11,7 @@ const PostsController = {
           populate: {
             path: "user",
             model: "User",
-            select: ["username", "photo"]
+            select: "-password",
           },
         },
         {
@@ -19,7 +19,7 @@ const PostsController = {
           populate: {
             path: "user",
             model: "User",
-            select: ["username", "photo"],
+            select: "-password",
           },
         },
       ])

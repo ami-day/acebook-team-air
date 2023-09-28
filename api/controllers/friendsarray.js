@@ -30,14 +30,24 @@ const FollowController = {
 
     Update: async (req, res) => {
 
-        User.findByIdAndUpdate(
+        await User.findByIdAndUpdate(
             req.user_id,
             { $pull: { friends_array: { $in: [req.body.userId] }  }},
             { new: true },
             (error) => {
-              if (error) {
+                if (error) {
                 throw error;
-              }
+                }
+            }
+        ),
+        await User.findByIdAndUpdate(
+            req.body.userId,
+            { $pull: { friends_array: { $in: [req.user_id] }  }},
+            { new: true },
+            (error) => {
+                if (error) {
+                throw error;
+                }
             }
         )
 
@@ -45,7 +55,8 @@ const FollowController = {
         await User.findById(req.user_id).exec((err, data) => {
             res.status(201).json({ message: "OK", token: token, user: data })
         });
-      }
-    };
+    }
+
+};
 
 module.exports = FollowController;
