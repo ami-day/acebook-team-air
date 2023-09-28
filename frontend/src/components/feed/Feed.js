@@ -55,7 +55,7 @@ const Feed = ({ navigate, user }) => {
           style={{ display: "flex", gap: "20px" }}
         >
           <div style={{ flex: 1 }}>
-            <ProfileCard></ProfileCard>
+            <ProfileCard user={user}></ProfileCard>
           </div>
           <div style={{ flex: 1 }}>
             <div className="mb-5">

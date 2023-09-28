@@ -13,6 +13,7 @@ const ProfileCard = ({ user }) => {
   };
 
   useEffect(() => {
+    console.log(user);
     if (newAvatar) {
       const formData = new FormData();
       formData.append("avatar", newAvatar);
