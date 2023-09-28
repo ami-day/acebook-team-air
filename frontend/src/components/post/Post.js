@@ -3,21 +3,26 @@ import Comment from "../comment/Comment";
 import Like from "../like/Like";
 import "./Post.css";
 import Avatar from "../user/Avatar";
+import EditPostModal from "./EditPostModal";
 import DeletePost from "../deletePost/DeletePost";
-const Filter = require('bad-words');
+const Filter = require("bad-words");
 const filter = new Filter();
 
-const Post = ({ post, token, user, setPosts}) => {
+const Post = ({ post, token, user, setPosts }) => {
   const commentBox = useRef();
   const [newComment, setNewComment] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [likeCount, setLikeCount] = useState(0);
   const [liked, setLiked] = useState(false);
+  const [message, setMessage] = useState(post.message);
+  const [showModal, setShowModal] = useState(false);
+
+  const handleShowModal = () => setShowModal(true);
 
   //filters rude words and replaces them with *
   const ReplaceRudeWords = (post) => {
     return filter.clean(post);
-};
+  };
 
   useEffect(() => {
     if (token) {
@@ -118,14 +123,29 @@ const Post = ({ post, token, user, setPosts}) => {
           Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(data),
-      }).then((response) => {
-        if (response.status === 201) {
-          window.location.reload();
-          console.log("Post successfully added");
-        } else {
-          console.log("Post not successfully added");
-        }
-      });
+      })
+        .then((response) => {
+          if (response.status === 201) {
+            console.log("Comment successfully added");
+            return response.json();
+          } else {
+            console.log("Comment not successfully added");
+          }
+        })
+        .then((data) => {
+          console.log(data.comment);
+          // add created comment to posts array
+          setPosts((prev) => {
+            return prev.map((prevPost) => {
+              if (prevPost._id === post._id) {
+                prevPost.comments.push(data.comment);
+                console.log(prevPost);
+              }
+              return prevPost;
+            });
+          });
+          setNewComment("");
+        });
     } else {
       console.log("No token!");
     }
@@ -134,19 +154,21 @@ const Post = ({ post, token, user, setPosts}) => {
   return (
     <article className="post" data-cy="post" key={post._id}>
       <div className="post-header">
-        <Avatar size={50} user={post.user}/>
+        <Avatar size={50} user={post.user} />
         <div>
           <p className="username">{post.user.username}</p>
           <p className="datetime">{formattedDate}</p>
         </div>
       </div>
-      <DeletePost postId={post._id} token={token} setPosts={setPosts}/>
-      <p>{ReplaceRudeWords(post.message)}</p>
+      <p>{ReplaceRudeWords(message)}</p>
       {post.photo && <img className="post-img" src={`/${post.photo}`} />}
       <Like likeCount={likeCount} />
       <div className="post-buttons">
         <button onClick={handleLikeClick} className="btn btn-primary">
           {liked ? "Unlike" : "Like"}
+        </button>
+        <button onClick={handleShowModal} className="btn btn-primary">
+          Edit Post
         </button>
         <button
           onClick={() => {
@@ -157,6 +179,16 @@ const Post = ({ post, token, user, setPosts}) => {
           Comment
         </button>
       </div>
+
+      <EditPostModal
+        showModal={showModal}
+        handleClose={() => setShowModal(false)}
+        post={post}
+        token={token}
+        setShowModal={setShowModal}
+        setMessage={setMessage} // change the message from inside the modal
+      />
+
       <div className="comments">
         {post.comments.length ? (
           post.comments.map((comment) => (

@@ -45,7 +45,7 @@ const Profile = ({ navigate, user }) => {
       <>
         <Navbar onLogout={logout} token={token} user={user} />
         <main>
-          <ProfileCard />
+          <ProfileCard user={user} />
           <div className="mb-5">
             <PostForm token={token}></PostForm>
           </div>

@@ -27,12 +27,21 @@ const CommentsController = {
             req.user_id,
             { $push: { comments: createdComment._id } },
             { new: true, useFindAndModify: false },
-            (error) => {
+            async (error) => {
               if (error) {
                 throw error;
               }
+              await createdComment
+                .populate({
+                  path: "user",
+                  model: "User",
+                  select: "-password",
+                })
+                .execPopulate();
               const token = TokenGenerator.jsonwebtoken(req.user_id);
-              res.status(201).json({ message: "OK", token: token });
+              res
+                .status(201)
+                .json({ message: "OK", token: token, comment: createdComment });
             }
           );
         }

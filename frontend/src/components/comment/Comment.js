@@ -89,7 +89,7 @@ const Comment = ({ comment, post, token, user, setPosts}) => {
 
   return (
     <div className="comment">
-      <Avatar size={35} user={comment.user}/>
+      <Avatar size={35} user={comment.user} />
       <div>
         <div className="details">
           <p className="username">{comment.user.username}</p>
