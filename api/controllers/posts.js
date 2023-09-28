@@ -11,7 +11,7 @@ const PostsController = {
           populate: {
             path: "user",
             model: "User",
-            select: "username",
+            select: ["username", "photo"]
           },
         },
         {
@@ -51,6 +51,17 @@ const PostsController = {
       res.status(201).json({ message: "OK", token: token });
     });
   },
+
+  Delete: async (req, res) => {
+    const postId= req.params.id
+    console.log("1hibwefvwyevfywveyvfwyeveiwoevfqrv",postId)
+    await Post.findByIdAndDelete(postId)
+    .exec((err, id) => {
+      const token = TokenGenerator.jsonwebtoken(req.user_id);
+
+      res.status(204).json({ message: "OK", token: token});
+    })
+  } 
 };
 
 module.exports = PostsController;

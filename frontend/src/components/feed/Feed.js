@@ -67,7 +67,7 @@ const Feed = ({ navigate, user }) => {
               </h2>
               <div id="feed" role="feed" className="container">
                 {posts.map((post) => (
-                  <Post post={post} key={post._id} token={token} user={user} />
+                  <Post post={post} key={post._id} token={token} user={user} setPosts={setPosts} />
                 ))}
               </div>
             </div>

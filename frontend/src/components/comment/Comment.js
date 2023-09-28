@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from "react";
 import Like from "../like/Like";
 import "./comments.css";
+import Delete from "../delete/Delete";
 
-const Comment = ({ comment, post, token, user }) => {
+const Comment = ({ comment, post, token, user, setPosts}) => {
   const [likeCount, setLikeCount] = useState(0);
   const [liked, setLiked] = useState(false);
+
+  
+
 
   // Get all data
   useEffect(() => {
@@ -86,6 +90,7 @@ const Comment = ({ comment, post, token, user }) => {
           <p className="username">{comment.user.username}</p>
           <p>{comment.content}</p>
         </div>
+        <Delete commentId={comment._id} token={token} setPosts={setPosts} />
         <div className="info">
           <p>{formattedDate}</p>
           <p onClick={handleLikeClick} className="like">
@@ -97,4 +102,6 @@ const Comment = ({ comment, post, token, user }) => {
     </div>
   );
 };
+
+
 export default Comment;

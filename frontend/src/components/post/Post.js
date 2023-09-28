@@ -3,7 +3,7 @@ import Comment from "../comment/Comment";
 import Like from "../like/Like";
 import "./Post.css";
 
-const Post = ({ post, token, user }) => {
+const Post = ({ post, token, user, setPosts}) => {
   const commentBox = useRef();
   const [newComment, setNewComment] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -156,6 +156,7 @@ const Post = ({ post, token, user }) => {
               post={post}
               token={token}
               user={user}
+              setPosts={setPosts}
             />
           ))
         ) : (

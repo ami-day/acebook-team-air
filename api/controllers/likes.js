@@ -68,7 +68,6 @@ const LikesController = {
     await Like.deleteOne(likeData); 
     const token = TokenGenerator.jsonwebtoken(req.user_id);
     Like.find(filter, (error, data) => {
-      console.log(data);
       res.status(201).json({ message: "OK", token: token, likes: data });
     });
   }
