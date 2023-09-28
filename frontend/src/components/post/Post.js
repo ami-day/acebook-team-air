@@ -7,7 +7,7 @@ import EditPostModal from "./EditPostModal";
 const Filter = require('bad-words');
 const filter = new Filter();
 
-const Post = ({ post, token, user }) => {
+const Post = ({ post, token, user, setPosts }) => {
   const commentBox = useRef();
   const [newComment, setNewComment] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -122,14 +122,29 @@ const Post = ({ post, token, user }) => {
           Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(data),
-      }).then((response) => {
-        if (response.status === 201) {
-          window.location.reload();
-          console.log("Post successfully added");
-        } else {
-          console.log("Post not successfully added");
-        }
-      });
+      })
+        .then((response) => {
+          if (response.status === 201) {
+            console.log("Comment successfully added");
+            return response.json();
+          } else {
+            console.log("Comment not successfully added");
+          }
+        })
+        .then((data) => {
+          console.log(data.comment);
+          // add created comment to posts array
+          setPosts((prev) => {
+            return prev.map((prevPost) => {
+              if (prevPost._id === post._id) {
+                prevPost.comments.push(data.comment);
+                console.log(prevPost);
+              }
+              return prevPost;
+            });
+          });
+          setNewComment("");
+        });
     } else {
       console.log("No token!");
     }

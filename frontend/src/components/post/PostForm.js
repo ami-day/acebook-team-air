@@ -2,7 +2,7 @@ import "./PostForm.css";
 import React, { useState } from "react";
 import "./PostForm.css";
 
-const PostForm = ({ token }) => {
+const PostForm = ({ token, setPosts }) => {
   const [message, setMessage] = useState("");
   const [photo, setPhoto] = useState("");
 
@@ -26,14 +26,19 @@ const PostForm = ({ token }) => {
           Authorization: `Bearer ${token}`,
         },
         body: formData,
-      }).then((response) => {
-        if (response.status === 201) {
-          window.location.reload();
-          console.log("Post successfully added");
-        } else {
-          console.log("Post not successfully added");
-        }
-      });
+      })
+        .then((response) => {
+          if (response.status === 201) {
+            console.log("Post successfully added");
+            return response.json();
+          } else {
+            console.log("Post not successfully added");
+          }
+        })
+        .then((data) => {
+          // update posts array with new post
+          setPosts((prevPosts) => [data.post, ...prevPosts]);
+        });
     } else {
       console.log("No token!");
     }

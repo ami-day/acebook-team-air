@@ -35,7 +35,7 @@ const PostsController = {
         });
       });
   },
-  Create: (req, res) => {
+  Create: async (req, res) => {
     console.log(req.file);
     let photo = "";
     const message = req.body.message;
@@ -43,12 +43,23 @@ const PostsController = {
       photo = req.file.filename;
     }
     const post = new Post({ message, user: req.user_id, photo });
-    post.save((err) => {
+    post.save((err, savedPost) => {
       if (err) {
         throw err;
       }
-      const token = TokenGenerator.jsonwebtoken(req.user_id);
-      res.status(201).json({ message: "OK", token: token });
+      savedPost.populate(
+        {
+          path: "user",
+          model: "User",
+          select: "-password",
+        },
+        (err, populatedPost) => {
+          const token = TokenGenerator.jsonwebtoken(req.user_id);
+          res
+            .status(201)
+            .json({ message: "OK", token: token, post: populatedPost });
+        }
+      );
     });
   },
 
