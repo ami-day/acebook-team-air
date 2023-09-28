@@ -54,13 +54,11 @@ const PostsController = {
 
   Delete: async (req, res) => {
     const postId= req.params.id
-    console.log("1hibwefvwyevfywveyvfwyeveiwoevfqrv",postId)
+    console.log("this function is running", postId)
     await Post.findByIdAndDelete(postId)
-    .exec((err, id) => {
       const token = TokenGenerator.jsonwebtoken(req.user_id);
-
-      res.status(204).json({ message: "OK", token: token});
-    })
+      console.log(token)
+      res.status(200).json({ message: "OK", token: token});
   } 
 };
 

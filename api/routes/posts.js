@@ -28,5 +28,6 @@ let upload = multer({ storage, fileFilter });
 
 router.get("/", PostsController.Index);
 router.post("/", upload.single("photo"), PostsController.Create);
+router.delete("/:id", PostsController.Delete);
 
 module.exports = router;

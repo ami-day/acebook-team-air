@@ -3,6 +3,7 @@ import Comment from "../comment/Comment";
 import Like from "../like/Like";
 import "./Post.css";
 import Avatar from "../user/Avatar";
+import DeletePost from "../deletePost/DeletePost";
 const Filter = require('bad-words');
 const filter = new Filter();
 
@@ -139,6 +140,7 @@ const Post = ({ post, token, user, setPosts}) => {
           <p className="datetime">{formattedDate}</p>
         </div>
       </div>
+      <DeletePost postId={post._id} token={token} setPosts={setPosts}/>
       <p>{ReplaceRudeWords(post.message)}</p>
       {post.photo && <img className="post-img" src={`/${post.photo}`} />}
       <Like likeCount={likeCount} />

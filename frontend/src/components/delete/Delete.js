@@ -11,7 +11,7 @@ const Delete = ({ commentId, token, setPosts }) => {
       },
     })
       .then((response) => {
-        if (response.status === 204) {
+        if (response.status === 200) {
           console.log('Comment deleted successfully');
           setPosts((previousPosts) => {
             return previousPosts.map((post) => {
@@ -34,13 +34,7 @@ const Delete = ({ commentId, token, setPosts }) => {
   };
 
   return (
-    <button
-      type="button"
-      className="btn btn-primary"
-      onClick={handleDeleteClick}
-    >
-      Delete
-    </button>
+    <i className="fa fa-trash-o" aria-hidden="true" onClick={handleDeleteClick}></i>
   );
 };
 

@@ -46,8 +46,7 @@ const CommentsController = {
     await Comment.findByIdAndDelete(commentId)
     .exec((err, id) => {
       const token = TokenGenerator.jsonwebtoken(req.user_id);
-
-      res.status(204).json({ message: "OK", token: token});
+      res.status(200).json({ message: "OK", token: token});
     })
   } 
 }
