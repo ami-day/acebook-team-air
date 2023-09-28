@@ -9,7 +9,7 @@ const SignUpForm = ({ navigate }) => {
   const [photo, setPhoto] = useState("");
   const [errorMessage, setErrorMessage] = useState("")
   const [confirmPassword, setConfirmPassword] = useState("");
-  const filter = new Filter
+  const filter = new Filter();
   
   const handleSubmit = async (event) => {
     event.preventDefault()
