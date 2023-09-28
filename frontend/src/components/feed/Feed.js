@@ -73,7 +73,7 @@ const Feed = ({ navigate, user }) => {
             </div>
           </div>
           <div style={{ flex: 1 }}>
-            <FriendsCard setModal={setModal}></FriendsCard>
+            <FriendsCard setModal={setModal} token={token}></FriendsCard>
           </div>
         </main>
       </>

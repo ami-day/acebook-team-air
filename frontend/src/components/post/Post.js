@@ -4,6 +4,8 @@ import Like from "../like/Like";
 import "./Post.css";
 import Avatar from "../user/Avatar";
 import EditPostModal from "./EditPostModal"; 
+const Filter = require('bad-words');
+const filter = new Filter();
 
 const Post = ({ post, token, user }) => {
   const commentBox = useRef();
@@ -15,6 +17,11 @@ const Post = ({ post, token, user }) => {
   const [showModal, setShowModal] = useState(false);
 
   const handleShowModal = () => setShowModal(true);
+
+  //filters rude words and replaces them with *
+  const ReplaceRudeWords = (post) => {
+    return filter.clean(post);
+};
 
   useEffect(() => {
     if (token) {
@@ -137,7 +144,7 @@ const Post = ({ post, token, user }) => {
           <p className="datetime">{formattedDate}</p>
         </div>
       </div>
-      <p>{message}</p>
+      <p>{ReplaceRudeWords(message)}</p>
       {post.photo && <img className="post-img" src={`/${post.photo}`} />}
       <Like likeCount={likeCount} />
       <div className="post-buttons">
