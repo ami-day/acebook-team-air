@@ -22,10 +22,41 @@ const FollowController = {
                     throw error;
                 }
             })
-            const token = TokenGenerator.jsonwebtoken(req.user_id);
-            res.status(201).json({ message: "OK", token: token });
+        const token = TokenGenerator.jsonwebtoken(req.user_id);
+        await User.findById(req.user_id).exec((err, data) => {
+            res.status(201).json({ message: "OK", token: token, user: data })
+        });
+    },
 
+    Update: async (req, res) => {
+
+        await User.findByIdAndUpdate(
+            req.user_id,
+            { $pull: { friends_array: { $in: [req.body.userId] }  }},
+            { new: true },
+            (error) => {
+                if (error) {
+                throw error;
+                }
+            }
+        ),
+        await User.findByIdAndUpdate(
+            req.body.userId,
+            { $pull: { friends_array: { $in: [req.user_id] }  }},
+            { new: true },
+            (error) => {
+                if (error) {
+                throw error;
+                }
+            }
+        )
+
+        const token = TokenGenerator.jsonwebtoken(req.user_id);
+        await User.findById(req.user_id).exec((err, data) => {
+            res.status(201).json({ message: "OK", token: token, user: data })
+        });
     }
-}
+
+};
 
 module.exports = FollowController;

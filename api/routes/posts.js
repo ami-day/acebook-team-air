@@ -28,5 +28,6 @@ let upload = multer({ storage, fileFilter });
 
 router.get("/", PostsController.Index);
 router.post("/", upload.single("photo"), PostsController.Create);
+router.patch("/:id", PostsController.Update); // :id - Express.js URL placeholder
 
 module.exports = router;
