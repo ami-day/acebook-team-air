@@ -2,15 +2,14 @@ const createError = require("http-errors");
 const express = require("express");
 const path = require("path");
 const logger = require("morgan");
+const tokenChecker = require("./lib/tokenChecker");
 
 const postsRouter = require("./routes/posts");
 const commentsRouter = require("./routes/comments");
 const authenticationRouter = require("./routes/authentication");
 const usersRouter = require("./routes/users");
-const tokenChecker = require('./lib/tokenChecker')
-const likesRouter = require('./routes/likes');
-const allusersRouter = require('./routes/allusers');
-const friendsarrayRouter = require("./routes/friendsArray");
+const likesRouter = require("./routes/likes");
+const friendsRouter = require("./routes/friends");
 
 const app = express();
 
@@ -27,8 +26,7 @@ app.use("/comments", tokenChecker, commentsRouter);
 app.use("/likes", tokenChecker, likesRouter);
 app.use("/tokens", authenticationRouter);
 app.use("/users", usersRouter);
-app.use("/allusers", allusersRouter);
-app.use("/friendsarray", friendsarrayRouter);
+app.use("/friends", friendsRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

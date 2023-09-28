@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const PostSchema = new mongoose.Schema(
   {
-    message: { type: String}, // Structure arg
+    message: { type: String },
     user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",

@@ -11,6 +11,7 @@ const Feed = ({ navigate, user }) => {
   const [posts, setPosts] = useState([]);
   const [token, setToken] = useState(window.localStorage.getItem("token"));
   const [modal, setModal] = useState(false);
+  const [myFriends, setMyFriends] = useState(user?.friends_array || []);
 
   useEffect(() => {
     if (token) {
@@ -48,7 +49,13 @@ const Feed = ({ navigate, user }) => {
       <>
         <Navbar onLogout={logout} token={token} user={user} />
         {modal && (
-          <FriendsModal setModal={setModal} token={token}></FriendsModal>
+          <FriendsModal
+            setModal={setModal}
+            token={token}
+            user={user}
+            myFriends={myFriends}
+            setMyFriends={setMyFriends}
+          ></FriendsModal>
         )}
         <main
           className={`${modal && "blur"}`}
@@ -79,7 +86,13 @@ const Feed = ({ navigate, user }) => {
             </div>
           </div>
           <div style={{ flex: 1 }}>
-            <FriendsCard setModal={setModal} token={token}></FriendsCard>
+            <FriendsCard
+              setModal={setModal}
+              token={token}
+              user={user}
+              myFriends={myFriends}
+              setMyFriends={setMyFriends}
+            ></FriendsCard>
           </div>
         </main>
       </>

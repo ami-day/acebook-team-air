@@ -16,7 +16,6 @@ const storage = multer.diskStorage({
 });
 
 const fileFilter = (req, file, cb) => {
-  console.log(" file", file);
   const allowedTypes = ["image/jpeg", "image/jpg", "image/png"];
   if (allowedTypes.includes(file.mimetype)) {
     cb(null, true);
@@ -29,6 +28,7 @@ let upload = multer({ storage, fileFilter });
 
 router.post("/", UsersController.Create);
 router.get("/", tokenChecker, UsersController.Index);
+router.get("/me", tokenChecker, UsersController.IndexUser);
 router.patch(
   "/:id",
   tokenChecker,

@@ -14,14 +14,16 @@ const Post = ({ post, token, user, setPosts }) => {
   const [errorMessage, setErrorMessage] = useState("");
   const [likeCount, setLikeCount] = useState(0);
   const [liked, setLiked] = useState(false);
-  const [message, setMessage] = useState(post.message);
+  const [message, setMessage] = useState(post.message || "");
   const [showModal, setShowModal] = useState(false);
 
   const handleShowModal = () => setShowModal(true);
 
   //filters rude words and replaces them with *
-  const ReplaceRudeWords = (post) => {
-    return filter.clean(post);
+  const ReplaceRudeWords = (dirtyPost) => {
+    if (dirtyPost) {
+      return filter.clean(dirtyPost);
+    }
   };
 
   useEffect(() => {
@@ -45,11 +47,10 @@ const Post = ({ post, token, user, setPosts }) => {
     }
   }, [likeCount]);
 
-  const postedAt = new Date(post.createdAt);
-  const formattedDate = `${postedAt.toDateString()} -
-  ${String(postedAt.getHours().toPrecision().padStart(2, "0"))}:${String(
-    postedAt.getMinutes().toPrecision().padStart(2, "0")
-  )}`;
+  const formattedDate = new Date(post.createdAt).toLocaleString("en-gb", {
+    dateStyle: "medium",
+    timeStyle: "short",
+  });
 
   const handleCommentChange = (event) => {
     setNewComment(event.target.value);
@@ -84,12 +85,10 @@ const Post = ({ post, token, user, setPosts }) => {
           }
         })
         .then((data) => {
-          console.log("data:", data);
           setLikeCount(data.likes.length);
           const filteredLikes = data.likes.filter((like) => {
             return like.userId === user._id;
           });
-          console.log("filteredLikes:", filteredLikes);
           if (filteredLikes.length > 0) {
             setLiked(true);
           } else {
@@ -133,13 +132,11 @@ const Post = ({ post, token, user, setPosts }) => {
           }
         })
         .then((data) => {
-          console.log(data.comment);
           // add created comment to posts array
           setPosts((prev) => {
             return prev.map((prevPost) => {
               if (prevPost._id === post._id) {
                 prevPost.comments.push(data.comment);
-                console.log(prevPost);
               }
               return prevPost;
             });

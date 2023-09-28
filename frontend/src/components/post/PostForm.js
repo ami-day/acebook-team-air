@@ -38,6 +38,7 @@ const PostForm = ({ token, setPosts }) => {
         .then((data) => {
           // update posts array with new post
           setPosts((prevPosts) => [data.post, ...prevPosts]);
+          setMessage("");
         });
     } else {
       console.log("No token!");

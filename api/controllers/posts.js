@@ -35,14 +35,15 @@ const PostsController = {
         });
       });
   },
+
   Create: async (req, res) => {
-    console.log(req.file);
-    let photo = "";
-    const message = req.body.message;
-    if (req.file) {
-      photo = req.file.filename;
-    }
-    const post = new Post({ message, user: req.user_id, photo });
+    const message = req.body.message || null;
+    const photo = req.file?.filename || null;
+    const post = new Post({
+      message: message,
+      user: req.user_id,
+      photo: photo,
+    });
     post.save((err, savedPost) => {
       if (err) {
         throw err;
@@ -53,7 +54,7 @@ const PostsController = {
           model: "User",
           select: "-password",
         },
-        (err, populatedPost) => {
+        (error, populatedPost) => {
           const token = TokenGenerator.jsonwebtoken(req.user_id);
           res
             .status(201)
@@ -65,10 +66,8 @@ const PostsController = {
 
   Delete: async (req, res) => {
     const postId = req.params.id;
-    console.log("this function is running", postId);
     await Post.findByIdAndDelete(postId);
     const token = TokenGenerator.jsonwebtoken(req.user_id);
-    console.log(token);
     res.status(200).json({ message: "OK", token: token });
   },
 
@@ -76,7 +75,7 @@ const PostsController = {
     const id = req.params.id; // get post ID from URL
     /* const newPhoto = req.body.photo; 
       complex to implement so leave for now  */
-    const updatedData = { message: req.body.message }; // to hold update (message and/or photo)
+    const updatedData = { message: req.body.message || "" }; // to hold update (message and/or photo)
 
     /* .findByIdAndUpdate():
     Params: post id, updatedData, config object to return new post,

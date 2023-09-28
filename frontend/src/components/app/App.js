@@ -18,7 +18,7 @@ const App = () => {
 
   useEffect(() => {
     if (token) {
-      fetch("/users", {
+      fetch("/users/me", {
         headers: {
           Authorization: `Bearer ${token}`,
         },

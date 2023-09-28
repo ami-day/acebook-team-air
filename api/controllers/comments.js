@@ -50,19 +50,12 @@ const CommentsController = {
   },
 
   Delete: async (req, res) => {
-    const commentId= req.params.id
-    console.log("1hibwefvwyevfywveyvfwyeveiwoevfqrv",commentId)
-    await Comment.findByIdAndDelete(commentId)
-    .exec((err, id) => {
+    const commentId = req.params.id;
+    await Comment.findByIdAndDelete(commentId).exec((err, id) => {
       const token = TokenGenerator.jsonwebtoken(req.user_id);
-      res.status(200).json({ message: "OK", token: token});
-    })
-  } 
-}
-
-  
-
-  
-  
+      res.status(200).json({ message: "OK", token: token });
+    });
+  },
+};
 
 module.exports = CommentsController;
