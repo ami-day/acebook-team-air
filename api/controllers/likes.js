@@ -44,7 +44,6 @@ const LikesController = {
     }
     const token = TokenGenerator.jsonwebtoken(req.user_id);
     Like.find(filter, (error, data) => {
-      console.log(data);
       res.status(201).json({ message: "OK", token: token, likes: data });
     });
   },

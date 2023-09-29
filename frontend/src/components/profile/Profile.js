@@ -20,7 +20,6 @@ const Profile = ({ navigate, user }) => {
         .then(async (data) => {
           window.localStorage.setItem("token", data.token);
           setToken(window.localStorage.getItem("token"));
-          console.log(data.posts);
           sortDates(data.posts);
           setPosts(data.posts);
         });

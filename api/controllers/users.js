@@ -1,5 +1,6 @@
-const { post } = require("superagent");
 const User = require("../models/user");
+const Post = require("../models/post");
+const TokenGenerator = require("../lib/token_generator");
 
 const UsersController = {
   Create: async (req, res) => {
@@ -12,6 +13,7 @@ const UsersController = {
     } else {
       user.save((err) => {
         if (err) {
+          console.log(err);
           res.status(400).json({ message: "Bad request" });
         } else {
           res.status(201).json({ message: "OK" });
@@ -21,22 +23,39 @@ const UsersController = {
   },
 
   Index: (req, res) => {
-    User.findById(req.user_id).exec((err, foundUser) => {
-      res.status(200).json({
-        user: foundUser,
-      });
+    User.find().exec((err, users) => {
+      if (err) {
+        throw err;
+      }
+      // users.populate("")
+      const token = TokenGenerator.jsonwebtoken(req.user_id);
+      res.status(200).json({ token, users });
     });
+  },
+
+  IndexUser: (req, res) => {
+    User.findById(req.user_id)
+      .populate({
+        path: "friends_array",
+        model: "User",
+        select: "-password",
+      })
+      .exec((err, foundUser) => {
+        if (err) {
+          throw err;
+        }
+        const token = TokenGenerator.jsonwebtoken(req.user_id);
+        res.status(200).json({ token, user: foundUser });
+      });
   },
 
   Update: (req, res) => {
     const userId = req.params.id;
-    console.log("req file", req.file);
     let photo = "";
     if (req.file) {
       photo = req.file.filename;
     }
 
-    console.log("photo", photo);
     User.findByIdAndUpdate(
       userId,
       { photo: photo },

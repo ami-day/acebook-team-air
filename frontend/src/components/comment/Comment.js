@@ -1,18 +1,19 @@
 import React, { useState, useEffect } from "react";
 import Like from "../like/Like";
 import "./comments.css";
+import Delete from "../delete/Delete";
 import Avatar from "../user/Avatar";
-const Filter = require('bad-words');
+const Filter = require("bad-words");
 const filter = new Filter();
 
-const Comment = ({ comment, post, token, user }) => {
+const Comment = ({ comment, post, token, user, setPosts }) => {
   const [likeCount, setLikeCount] = useState(0);
   const [liked, setLiked] = useState(false);
 
-//filters rude words and replaces them with *
+  //filters rude words and replaces them with *
   const ReplaceRudeWords = (comment) => {
     return filter.clean(comment);
-};
+  };
 
   // Get all data
   useEffect(() => {
@@ -80,11 +81,10 @@ const Comment = ({ comment, post, token, user }) => {
     }
   };
 
-  const postedAt = new Date(comment.createdAt);
-  const formattedDate = `${postedAt.toDateString()} 
-  ${String(postedAt.getHours().toPrecision().padStart(2, "0"))}:${String(
-    postedAt.getMinutes().toPrecision().padStart(2, "0")
-  )}`;
+  const formattedDate = new Date(comment.createdAt).toLocaleString("en-gb", {
+    dateStyle: "medium",
+    timeStyle: "short",
+  });
 
   return (
     <div className="comment">
@@ -94,6 +94,7 @@ const Comment = ({ comment, post, token, user }) => {
           <p className="username">{comment.user.username}</p>
           <p>{ReplaceRudeWords(comment.content)}</p>
         </div>
+        <Delete commentId={comment._id} token={token} setPosts={setPosts} />
         <div className="info">
           <p>{formattedDate}</p>
           <p onClick={handleLikeClick} className="like">
@@ -105,4 +106,5 @@ const Comment = ({ comment, post, token, user }) => {
     </div>
   );
 };
+
 export default Comment;
