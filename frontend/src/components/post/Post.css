@@ -8,6 +8,7 @@
 }
 
 .post {
+    position: relative;
     background-color: aliceblue;
     width: 100%;
     padding: 20px;
@@ -46,4 +47,12 @@
 .post-buttons>* {
     flex-grow: 1;
     flex-basis: 50%;
+}
+
+.post .post-icons {
+    position: absolute;
+    display: flex;
+    gap: 10px;
+    top: 20px;
+    right: 20px;
 }

@@ -1,6 +1,5 @@
 .comment {
     display: flex;
-    position: relative;
     padding: 0.5rem;
     gap: 10px;
 }
@@ -12,6 +11,7 @@
 
 .comment .details {
     background-color: rgba(166, 165, 165, 0.2);
+    position: relative;
     padding: 10px;
     border-radius: 20px;
     margin-bottom: 5px;
@@ -34,8 +34,10 @@
     font-weight: 600;
 }
 
-.comment .edit-icon {
+.comment .comment-buttons {
     position: absolute;
-    top: 20px;
-    right: 20px;
+    display: flex;
+    gap: 10px;
+    top: 10px;
+    right: 10px;
 }

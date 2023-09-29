@@ -140,9 +140,11 @@ const Comment = ({ comment, post, token, user, setPosts }) => {
           <p onInput={handleCommentChange} contentEditable={`${editMode}`} ref={commentRef} tabIndex="0">
             {ReplaceRudeWords(comment.content)}
           </p>
+          <div className="comment-buttons">
           {editMode ? <i onClick={handleEdit} className="edit-icon fa fa-floppy-o" aria-hidden="true"></i> : <i onClick={handleEdit} className="edit-icon fa fa-pencil" aria-hidden="true"></i>}
+          <Delete commentId={comment._id} token={token} setPosts={setPosts} />
+          </div>
         </div>
-        <Delete commentId={comment._id} token={token} setPosts={setPosts} />
         <div className="info">
           <p>{formattedDate}</p>
           <p onClick={handleLikeClick} className="like">
