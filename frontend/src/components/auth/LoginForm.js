@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import './LoginForm.css';
 const LogInForm = ({ navigate }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState('')
+  const [hide, setHide] = useState(true);
   
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -35,6 +37,14 @@ const LogInForm = ({ navigate }) => {
     setPassword(event.target.value);
   };
 
+  const hideHandler = () => {
+    if(hide == true) {
+      setHide(false);
+    } else {
+      setHide(true);
+    }
+  }
+
   return (
     <div className="container min-vh-100 d-flex justify-content-center align-items-center p-4">
       <form
@@ -62,7 +72,7 @@ const LogInForm = ({ navigate }) => {
             Password
           </label>
           <input
-            type="password"
+            type={hide ? "password" : "text"}
             placeholder="Password"
             className="form-control"
             id="password"
@@ -70,6 +80,7 @@ const LogInForm = ({ navigate }) => {
             onChange={handlePasswordChange}
           />
         </div>
+        <i id="hide-icon" class="fa fa-eye-slash" onClick={hideHandler}></i>
         <p className="error">{errorMessage}</p>
         <div className="text-center">
           <button
