@@ -5,7 +5,7 @@ const User = require('../../models/user');
 
 describe("/tokens", () => {
   beforeAll(async () => {
-    const user = new User({ email: "test@test.com", password: "12345678" })
+    const user = new User({ email: "test@test.com", password: "12345678", username: "test" })
 
     // We need to use `await` so the
     // "beforeAll" setup function waits for the
@@ -36,6 +36,6 @@ describe("/tokens", () => {
       .send({email: "test@test.com", password: "1234"})
     expect(response.status).toEqual(401)
     expect(response.body.token).toEqual(undefined)
-    expect(response.body.message).toEqual("auth error")
+    expect(response.body.message).toEqual("Password is incorrect")
   })
 })

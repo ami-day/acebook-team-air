@@ -10,9 +10,8 @@ let token;
 
 describe("/posts", () => {
   beforeAll( async () => {
-    const user = new User({email: "test@test.com", password: "12345678"});
+    const user = new User({email: "test@test.com", password: "12345678", username: "test"});
     await user.save();
-
     token = JWT.sign({
       user_id: user.id,
       // Backdate this token of 5 minutes
