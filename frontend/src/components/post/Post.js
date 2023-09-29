@@ -157,16 +157,29 @@ const Post = ({ post, token, user, setPosts }) => {
           <p className="datetime">{formattedDate}</p>
         </div>
       </div>
-      <DeletePost postId={post._id} token={token} setPosts={setPosts} />
+      <div className="post-icons">
+        <i
+          onClick={handleShowModal}
+          className="edit-icon fa fa-pencil"
+          aria-hidden="true"
+        />
+        <DeletePost postId={post._id} token={token} setPosts={setPosts} />
+      </div>
       <p>{ReplaceRudeWords(message)}</p>
       {post.photo && <img className="post-img" src={`/${post.photo}`} />}
       <Like likeCount={likeCount} />
       <div className="post-buttons">
         <button onClick={handleLikeClick} className="btn btn-primary">
-          {liked ? "Unlike" : "Like"}
-        </button>
-        <button onClick={handleShowModal} className="btn btn-primary">
-          Edit Post
+          {liked ? (
+            <span>
+              Unlike
+              <i class="fa fa-thumbs-o-down ms-2" aria-hidden="true"></i>
+            </span>
+          ) : (
+            <span>
+              Like <i className="fa fa-thumbs-o-up ms-2" aria-hidden="true"></i>
+            </span>
+          )}
         </button>
         <button
           onClick={() => {

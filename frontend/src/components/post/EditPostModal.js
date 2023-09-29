@@ -16,8 +16,6 @@ const EditPostModal = ({
   // Update post handler
   const handlePostUpdate = () => {
     if (token) {
-
-
       fetch(`/posts/${post._id}`, {
         method: "PATCH",
         headers: {
@@ -57,6 +55,8 @@ const EditPostModal = ({
           </button>
         </div>
         <div className="custom-modal-body">
+          {/* Updates the newMessage state with the current
+           text in the text area whenever it changes */}
           <textarea  // handles text input
             className="form-input"
             value={newMessage}

@@ -11,6 +11,7 @@
 
 .comment .details {
     background-color: rgba(166, 165, 165, 0.2);
+    position: relative;
     padding: 10px;
     border-radius: 20px;
     margin-bottom: 5px;
@@ -31,4 +32,12 @@
 .comment .like {
     cursor: pointer;
     font-weight: 600;
+}
+
+.comment .comment-buttons {
+    position: absolute;
+    display: flex;
+    gap: 10px;
+    top: 10px;
+    right: 10px;
 }

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Like from "../like/Like";
 import "./comments.css";
 import Delete from "../delete/Delete";
@@ -9,6 +9,9 @@ const filter = new Filter();
 const Comment = ({ comment, post, token, user, setPosts }) => {
   const [likeCount, setLikeCount] = useState(0);
   const [liked, setLiked] = useState(false);
+  const [editMode, setEditMode] = useState(false);
+  const [editedComment, setEditedComment] = useState(comment.content);
+  const commentRef = useRef();
 
   //filters rude words and replaces them with *
   const ReplaceRudeWords = (comment) => {
@@ -81,6 +84,47 @@ const Comment = ({ comment, post, token, user, setPosts }) => {
     }
   };
 
+  // Update comment handler functions
+  const handleCommentChange = (e) => {
+    setEditedComment(e.target.textContent);
+  };
+
+  const handleEdit = () => {
+    commentRef.current.focus({ focusVisible: true });
+    if (editMode && editedComment !== comment.content) {
+      console.log("now make patch request", editedComment, comment.content);
+      console.log("we will send it with this data", editedComment);
+    
+      //make fetch to update db
+      fetch(`/comments/${comment._id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ content: editedComment }),
+      })
+        .then((response) => {
+          if (response.ok) {
+            console.log("Comment update successful.");
+            return response.json();
+          } else {
+            console.log("Comment update unsuccessful.");
+          }
+        })
+        .then((data) => {
+          console.log("data:", data)
+          console.log("data comment", data.comment.content);
+          setEditedComment(data.comment.content);
+          setEditMode(!editMode);
+          // window.location.reload();
+        });
+
+    } else {
+      setEditMode(!editMode);
+    }
+  };
+
   const formattedDate = new Date(comment.createdAt).toLocaleString("en-gb", {
     dateStyle: "medium",
     timeStyle: "short",
@@ -92,9 +136,15 @@ const Comment = ({ comment, post, token, user, setPosts }) => {
       <div>
         <div className="details">
           <p className="username">{comment.user.username}</p>
-          <p>{ReplaceRudeWords(comment.content)}</p>
+          {/* Update comment & toggle edit button display */}
+          <p onInput={handleCommentChange} contentEditable={`${editMode}`} ref={commentRef} tabIndex="0">
+            {ReplaceRudeWords(comment.content)}
+          </p>
+          <div className="comment-buttons">
+          {editMode ? <i onClick={handleEdit} className="edit-icon fa fa-floppy-o" aria-hidden="true"></i> : <i onClick={handleEdit} className="edit-icon fa fa-pencil" aria-hidden="true"></i>}
+          <Delete commentId={comment._id} token={token} setPosts={setPosts} />
+          </div>
         </div>
-        <Delete commentId={comment._id} token={token} setPosts={setPosts} />
         <div className="info">
           <p>{formattedDate}</p>
           <p onClick={handleLikeClick} className="like">
