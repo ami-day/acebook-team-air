@@ -48,6 +48,31 @@ const CommentsController = {
       );
     });
   },
+
+  Update: (req, res) => {
+    console.log("req.params", req.params); // log commentId
+    console.log("req.body:", req.body) // log updated comment content hopefully
+    
+    const commentId = req.params.commentId; // get comment ID from URL
+    const updatedData = {content: req.body.content}; // to hold update (comment content)
+
+    /* .findByIdAndUpdate():
+    Params: comment id, updatedData, config object to return new post,
+    async function that takes in the return data (post) or an error  */
+    Comment.findByIdAndUpdate(commentId, updatedData, {new: true, useFindAndModify: false}, 
+      (err, updatedData) => {  // callback function to handle update result
+        if (err){
+          console.log(err);
+          return res.status(400).json(err);
+        }
+        else{
+            console.log("Comment updated with:", updatedData);
+            return res.status(200).json({message: "OK", comment: updatedData})
+        };
+    }
+    );
+  }
+
 };
 
 module.exports = CommentsController;
