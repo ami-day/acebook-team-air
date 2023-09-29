@@ -31,7 +31,7 @@ form {
   box-shadow: 5px 5px 10px 0px rgba(0, 0, 0, 0.2);
 }
 
-#feed {
+#feed-page {
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
@@ -63,4 +63,8 @@ form {
 
 .avatar:hover {
   scale: 1.05;
+}
+
+i.fa {
+  cursor: pointer;
 }

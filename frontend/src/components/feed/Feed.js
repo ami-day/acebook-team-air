@@ -86,7 +86,7 @@ const Feed = ({ navigate }) => {
             setMyFriends={setMyFriends}
           ></FriendsModal>
         )}
-        <main className={`${modal ? "blur" : ""}`} id="feed">
+        <main className={`${modal ? "blur" : ""}`} id="feed-page">
           <div style={{ flex: "0 1 500px" }}>
             <ProfileCard
               user={user}
