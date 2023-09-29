@@ -2,16 +2,39 @@ import React, { useEffect, useState } from "react";
 import Post from "../post/Post";
 import PostForm from "../post/PostForm";
 import Navbar from "../navbar/navbar";
-import "./Feed.css";
 import FriendsCard from "../FriendsCard/FriendsCard";
 import ProfileCard from "../profile/ProfileCard";
 import FriendsModal from "./FriendsModal";
+import "./Feed.css";
 
-const Feed = ({ navigate, user }) => {
+const Feed = ({ navigate }) => {
   const [posts, setPosts] = useState([]);
   const [token, setToken] = useState(window.localStorage.getItem("token"));
+  const [user, setUser] = useState(null);
   const [modal, setModal] = useState(false);
   const [myFriends, setMyFriends] = useState(user?.friends_array || []);
+
+  useEffect(() => {
+    if (token) {
+      fetch("/users/me", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .then((response) => {
+          if (response.ok) {
+            return response.json();
+          } else {
+            logout();
+          }
+        })
+        .then(async (data) => {
+          window.localStorage.setItem("token", data.token);
+          setToken(window.localStorage.getItem("token"));
+          setUser(data.user);
+        });
+    }
+  }, []);
 
   useEffect(() => {
     if (token) {
@@ -20,7 +43,13 @@ const Feed = ({ navigate, user }) => {
           Authorization: `Bearer ${token}`,
         },
       })
-        .then((response) => response.json())
+        .then((response) => {
+          if (response.ok) {
+            return response.json();
+          } else {
+            logout();
+          }
+        })
         .then(async (data) => {
           window.localStorage.setItem("token", data.token);
           setToken(window.localStorage.getItem("token"));
@@ -62,7 +91,11 @@ const Feed = ({ navigate, user }) => {
           style={{ display: "flex", gap: "20px" }}
         >
           <div style={{ flex: 1 }}>
-            <ProfileCard user={user}></ProfileCard>
+            <ProfileCard
+              user={user}
+              setUser={setUser}
+              posts={posts}
+            ></ProfileCard>
           </div>
           <div style={{ flex: 1 }}>
             <div className="mb-5">
@@ -70,7 +103,7 @@ const Feed = ({ navigate, user }) => {
             </div>
             <div>
               <h2 style={{ color: "aliceblue" }} className="text-center">
-                Posts
+                {posts.length > 0 ? "Posts" : "No Posts. Be the first 👆"}
               </h2>
               <div id="feed" role="feed" className="container">
                 {posts.map((post) => (
