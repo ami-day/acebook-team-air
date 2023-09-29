@@ -60,7 +60,7 @@ const FriendProfile = ({ friend, token, user, myFriends, setMyFriends }) => {
 
   return (
     <div id="friend-profile">
-      <Avatar size={120} user={friend} />
+      <Avatar size={80} user={friend} />
       <p className="username">{friend.username}</p>
       <button className="btn modal-btn btn-primary" onClick={onButtonClick}>
         {followed ? "Followed" : "Follow Friend"}
