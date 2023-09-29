@@ -157,6 +157,7 @@ const Post = ({ post, token, user, setPosts }) => {
           <p className="datetime">{formattedDate}</p>
         </div>
       </div>
+      <DeletePost postId={post._id} token={token} setPosts={setPosts} />
       <p>{ReplaceRudeWords(message)}</p>
       {post.photo && <img className="post-img" src={`/${post.photo}`} />}
       <Like likeCount={likeCount} />

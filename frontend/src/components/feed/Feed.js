@@ -87,7 +87,7 @@ const Feed = ({ navigate }) => {
           ></FriendsModal>
         )}
         <main className={`${modal ? "blur" : ""}`} id="feed">
-          <div style={{ flex: "0 1 400px" }}>
+          <div style={{ flex: "0 1 500px" }}>
             <ProfileCard
               user={user}
               setUser={setUser}
@@ -115,7 +115,7 @@ const Feed = ({ navigate }) => {
               </div>
             </div>
           </div>
-          <div style={{ flex: "0 1 400px" }}>
+          <div style={{ flex: "0 1 500px" }}>
             <FriendsCard
               setModal={setModal}
               token={token}
