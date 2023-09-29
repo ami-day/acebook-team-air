@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import "./SignUpForm.css";
 const Filter = require('bad-words');
 
 const SignUpForm = ({ navigate }) => {
@@ -9,6 +10,7 @@ const SignUpForm = ({ navigate }) => {
   const [photo, setPhoto] = useState("");
   const [errorMessage, setErrorMessage] = useState("")
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [hide, setHide] = useState(true);
   const filter = new Filter();
   
   const handleSubmit = async (event) => {
@@ -75,6 +77,14 @@ const SignUpForm = ({ navigate }) => {
     setPhoto(event.target.value);
   };   
 
+  const hideHandler = () => {
+    if(hide == true) {
+      setHide(false);
+    } else {
+      setHide(true);
+    }
+  }
+
   return (
     <div className="container min-vh-100 d-flex justify-content-center align-items-center p-4">
       <form id="signup-form" className="rounded-4 p-3" onSubmit={handleSubmit}>
@@ -127,7 +137,7 @@ const SignUpForm = ({ navigate }) => {
             Password
           </label>
           <input
-            type="password"
+            type={hide ? "password" : "text"}
             placeholder="Password"
             className="form-control"
             id="password"
@@ -135,13 +145,14 @@ const SignUpForm = ({ navigate }) => {
             value={password}
             onChange={handlePasswordChange}
           />
+          <i id="hide-icon" class="fa fa-eye-slash" onClick={hideHandler}></i>
         </div>
         <div className="mb-3">
           <label htmlFor="confirm-password" className="form-label">
             Confirm Password
           </label>
           <input
-            type="password"
+            type={hide ? "password" : "text"}
             placeholder="Re-enter Password"
             className="form-control"
             id="confirm-password"
