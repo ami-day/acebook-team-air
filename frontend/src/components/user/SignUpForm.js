@@ -1,61 +1,67 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "./SignUpForm.css";
-const Filter = require('bad-words');
+const Filter = require("bad-words");
 
 const SignUpForm = ({ navigate }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
   const [photo, setPhoto] = useState("");
-  const [errorMessage, setErrorMessage] = useState("")
+  const [errorMessage, setErrorMessage] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [hide, setHide] = useState(true);
   const filter = new Filter();
-  
+
   const handleSubmit = async (event) => {
-    event.preventDefault()
+    event.preventDefault();
     if (filter.isProfane(username)) {
-      setErrorMessage("Username contains profanity. Please choose a different username.");
+      setErrorMessage(
+        "Username contains profanity. Please choose a different username."
+      );
       return;
     }
-    if(!passwordValiding(password)){
-      setErrorMessage("Password not valid. Password must include an uppercase and lowercase character, a special character (@$!%*?&) and be a minimum of 8 characters")
-    }else if(password != confirmPassword){
-      setErrorMessage("Passwords do not match")
-    }
-    else{
+    if (!passwordValiding(password)) {
+      setErrorMessage(
+        "Password not valid. Password must include an uppercase and lowercase character, a special character (@$!%*?&) and be a minimum of 8 characters"
+      );
+    } else if (password != confirmPassword) {
+      setErrorMessage("Passwords do not match");
+    } else {
       fetch("/users", {
         method: "post",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email: email, password: password, username: username, photo: photo }),
-      }).then((response) => {
-        if (response.status === 201) {
-          navigate("/login");
-        } else {
-          return response.json()
-        }
-      }).then( (data) => {
-        setErrorMessage(data.message)
-      }
-      )
-    };}
-    
-  
-  
-
+        body: JSON.stringify({
+          email: email,
+          password: password,
+          username: username,
+          photo: photo,
+        }),
+      })
+        .then((response) => {
+          if (response.status === 201) {
+            navigate("/login");
+          } else {
+            return response.json();
+          }
+        })
+        .then((data) => {
+          setErrorMessage(data.message);
+        });
+    }
+  };
 
   const passwordValiding = (password) => {
-    const regex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    const regex =
+      /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
     if (regex.test(password)) {
-      return true
+      return true;
     } else {
-      return false
+      return false;
     }
-  }
-  
+  };
 
   const handleEmailChange = (event) => {
     setEmail(event.target.value);
@@ -68,22 +74,22 @@ const SignUpForm = ({ navigate }) => {
   const handleConfirmPasswordChange = (event) => {
     setConfirmPassword(event.target.value);
   };
-  
+
   const handleNameChange = (event) => {
     setUsername(event.target.value);
-  };  
+  };
 
   const handlePhotoChange = (event) => {
     setPhoto(event.target.value);
-  };   
+  };
 
   const hideHandler = () => {
-    if(hide == true) {
+    if (hide == true) {
       setHide(false);
     } else {
       setHide(true);
     }
-  }
+  };
 
   return (
     <div className="container min-vh-100 d-flex justify-content-center align-items-center p-4">
@@ -103,7 +109,7 @@ const SignUpForm = ({ navigate }) => {
             autoComplete="off"
           />
         </div>
-        <div className="mb-3">
+        {/* <div className="mb-3">
           <label htmlFor="photo" className="form-label">
             photoURL
           </label>
@@ -116,7 +122,7 @@ const SignUpForm = ({ navigate }) => {
             placeholder="photoURL"
             autoComplete="off"
           />
-        </div>
+        </div> */}
         <div className="mb-3">
           <label htmlFor="email" className="form-label">
             Email address
@@ -132,10 +138,10 @@ const SignUpForm = ({ navigate }) => {
             aria-describedby="emailHelp"
           />
         </div>
-        <div className="mb-3">
-          <label htmlFor="password" className="form-label">
-            Password
-          </label>
+        <label htmlFor="password" className="form-label">
+          Password
+        </label>
+        <div className="mb-3 input-group">
           <input
             type={hide ? "password" : "text"}
             placeholder="Password"
@@ -145,7 +151,17 @@ const SignUpForm = ({ navigate }) => {
             value={password}
             onChange={handlePasswordChange}
           />
-          <i id="hide-icon" class="fa fa-eye-slash" onClick={hideHandler}></i>
+          <button type="button" className="hide-button btn btn-secondary">
+            {!hide ? (
+              <i id="hide-icon" className="fa fa-eye" onClick={hideHandler}></i>
+            ) : (
+              <i
+                id="hide-icon"
+                className="fa fa-eye-slash"
+                onClick={hideHandler}
+              ></i>
+            )}
+          </button>
         </div>
         <div className="mb-3">
           <label htmlFor="confirm-password" className="form-label">
@@ -161,7 +177,7 @@ const SignUpForm = ({ navigate }) => {
             onChange={handleConfirmPasswordChange}
           />
         </div>
-        <p className='error'>{errorMessage}</p>
+        <p className="error">{errorMessage}</p>
         <div className="text-center">
           <button
             type="submit"

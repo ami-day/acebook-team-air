@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import './LoginForm.css';
+import "./LoginForm.css";
+
 const LogInForm = ({ navigate }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [errorMessage, setErrorMessage] = useState('')
+  const [errorMessage, setErrorMessage] = useState("");
   const [hide, setHide] = useState(true);
-  
+
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -17,10 +18,10 @@ const LogInForm = ({ navigate }) => {
       },
       body: JSON.stringify({ email: email, password: password }),
     });
-    
+
     if (response.status !== 201) {
-      let data = await response.json()
-      setErrorMessage(data.message)
+      let data = await response.json();
+      setErrorMessage(data.message);
       //navigate("/login");
     } else {
       let data = await response.json();
@@ -38,12 +39,12 @@ const LogInForm = ({ navigate }) => {
   };
 
   const hideHandler = () => {
-    if(hide == true) {
+    if (hide == true) {
       setHide(false);
     } else {
       setHide(true);
     }
-  }
+  };
 
   return (
     <div className="container min-vh-100 d-flex justify-content-center align-items-center p-4">
@@ -67,10 +68,10 @@ const LogInForm = ({ navigate }) => {
             aria-describedby="emailHelp"
           />
         </div>
-        <div className="mb-3">
-          <label htmlFor="password" className="form-label">
-            Password
-          </label>
+        <label htmlFor="password" className="form-label">
+          Password
+        </label>
+        <div className="mb-3 input-group">
           <input
             type={hide ? "password" : "text"}
             placeholder="Password"
@@ -79,8 +80,18 @@ const LogInForm = ({ navigate }) => {
             value={password}
             onChange={handlePasswordChange}
           />
+          <button type="button" className="hide-button btn btn-secondary">
+            {!hide ? (
+              <i id="hide-icon" className="fa fa-eye" onClick={hideHandler}></i>
+            ) : (
+              <i
+                id="hide-icon"
+                className="fa fa-eye-slash"
+                onClick={hideHandler}
+              ></i>
+            )}
+          </button>
         </div>
-        <i id="hide-icon" class="fa fa-eye-slash" onClick={hideHandler}></i>
         <p className="error">{errorMessage}</p>
         <div className="text-center">
           <button
