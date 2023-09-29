@@ -2,10 +2,17 @@ import React, { useState, useEffect, useRef } from "react";
 import "./ProfileCard.css";
 import Avatar from "../user/Avatar";
 
-const ProfileCard = ({ user }) => {
+const ProfileCard = ({ user, setUser, posts }) => {
   const inputRef = useRef();
   const [token, setToken] = useState(window.localStorage.getItem("token"));
   const [newAvatar, setNewAvatar] = useState(null);
+  const photos = posts
+    .map((post) => {
+      if (post.user._id === user._id) {
+        return post.photo;
+      }
+    })
+    .filter((photo) => photo);
 
   const handleAvatarChange = (event) => {
     console.log(event.target.files[0]);
@@ -13,7 +20,6 @@ const ProfileCard = ({ user }) => {
   };
 
   useEffect(() => {
-    console.log(user);
     if (newAvatar) {
       const formData = new FormData();
       formData.append("avatar", newAvatar);
@@ -24,14 +30,18 @@ const ProfileCard = ({ user }) => {
             Authorization: `Bearer ${token}`,
           },
           body: formData,
-        }).then((response) => {
-          if (response.ok) {
-            window.location.reload();
-            console.log("Post successfully added");
-          } else {
-            console.log("Post not successfully added");
-          }
-        });
+        })
+          .then((response) => {
+            if (response.ok) {
+              console.log("Post successfully added");
+              return response.json();
+            } else {
+              console.log("Post not successfully added");
+            }
+          })
+          .then((data) => {
+            setUser(data.newUser);
+          });
       } else {
         console.log("No token!");
       }
@@ -63,12 +73,11 @@ const ProfileCard = ({ user }) => {
           onChange={handleAvatarChange}
         />
 
-        <h3>photos</h3>
+        <h3>My Photos</h3>
         <div className="photo-images">
-          <img src="https://images.unsplash.com/photo-1526800544336-d04f0cbfd700?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80" />
-          <img src="https://images.unsplash.com/photo-1526800544336-d04f0cbfd700?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80" />
-          <img src="https://images.unsplash.com/photo-1526800544336-d04f0cbfd700?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80" />
-          <img src="https://images.unsplash.com/photo-1526800544336-d04f0cbfd700?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1974&q=80" />
+          {photos.map((photo) => {
+            return <img src={`/${photo}`} />;
+          })}
         </div>
       </div>
     </div>

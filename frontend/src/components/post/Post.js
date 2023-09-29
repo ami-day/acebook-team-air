@@ -3,8 +3,9 @@ import Comment from "../comment/Comment";
 import Like from "../like/Like";
 import "./Post.css";
 import Avatar from "../user/Avatar";
-import EditPostModal from "./EditPostModal"; 
-const Filter = require('bad-words');
+import EditPostModal from "./EditPostModal";
+import DeletePost from "../deletePost/DeletePost";
+const Filter = require("bad-words");
 const filter = new Filter();
 
 const Post = ({ post, token, user, setPosts }) => {
@@ -13,15 +14,17 @@ const Post = ({ post, token, user, setPosts }) => {
   const [errorMessage, setErrorMessage] = useState("");
   const [likeCount, setLikeCount] = useState(0);
   const [liked, setLiked] = useState(false);
-  const [message, setMessage] = useState(post.message);
+  const [message, setMessage] = useState(post.message || "");
   const [showModal, setShowModal] = useState(false);
 
   const handleShowModal = () => setShowModal(true);
 
   //filters rude words and replaces them with *
-  const ReplaceRudeWords = (post) => {
-    return filter.clean(post);
-};
+  const ReplaceRudeWords = (dirtyPost) => {
+    if (dirtyPost) {
+      return filter.clean(dirtyPost);
+    }
+  };
 
   useEffect(() => {
     if (token) {
@@ -44,11 +47,10 @@ const Post = ({ post, token, user, setPosts }) => {
     }
   }, [likeCount]);
 
-  const postedAt = new Date(post.createdAt);
-  const formattedDate = `${postedAt.toDateString()} -
-  ${String(postedAt.getHours().toPrecision().padStart(2, "0"))}:${String(
-    postedAt.getMinutes().toPrecision().padStart(2, "0")
-  )}`;
+  const formattedDate = new Date(post.createdAt).toLocaleString("en-gb", {
+    dateStyle: "medium",
+    timeStyle: "short",
+  });
 
   const handleCommentChange = (event) => {
     setNewComment(event.target.value);
@@ -83,12 +85,10 @@ const Post = ({ post, token, user, setPosts }) => {
           }
         })
         .then((data) => {
-          console.log("data:", data);
           setLikeCount(data.likes.length);
           const filteredLikes = data.likes.filter((like) => {
             return like.userId === user._id;
           });
-          console.log("filteredLikes:", filteredLikes);
           if (filteredLikes.length > 0) {
             setLiked(true);
           } else {
@@ -132,13 +132,11 @@ const Post = ({ post, token, user, setPosts }) => {
           }
         })
         .then((data) => {
-          console.log(data.comment);
           // add created comment to posts array
           setPosts((prev) => {
             return prev.map((prevPost) => {
               if (prevPost._id === post._id) {
                 prevPost.comments.push(data.comment);
-                console.log(prevPost);
               }
               return prevPost;
             });
@@ -159,6 +157,7 @@ const Post = ({ post, token, user, setPosts }) => {
           <p className="datetime">{formattedDate}</p>
         </div>
       </div>
+      <DeletePost postId={post._id} token={token} setPosts={setPosts} />
       <p>{ReplaceRudeWords(message)}</p>
       {post.photo && <img className="post-img" src={`/${post.photo}`} />}
       <Like likeCount={likeCount} />
@@ -178,7 +177,7 @@ const Post = ({ post, token, user, setPosts }) => {
           Comment
         </button>
       </div>
-      
+
       <EditPostModal
         showModal={showModal}
         handleClose={() => setShowModal(false)}
@@ -187,7 +186,7 @@ const Post = ({ post, token, user, setPosts }) => {
         setShowModal={setShowModal}
         setMessage={setMessage} // change the message from inside the modal
       />
-      
+
       <div className="comments">
         {post.comments.length ? (
           post.comments.map((comment) => (
@@ -197,6 +196,7 @@ const Post = ({ post, token, user, setPosts }) => {
               post={post}
               token={token}
               user={user}
+              setPosts={setPosts}
             />
           ))
         ) : (

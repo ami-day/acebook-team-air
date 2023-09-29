@@ -49,6 +49,7 @@ const CommentsController = {
     });
   },
 
+
   Update: (req, res) => {
     console.log("req.params", req.params); // log commentId
     console.log("req.body:", req.body) // log updated comment content hopefully
@@ -71,8 +72,16 @@ const CommentsController = {
         };
     }
     );
-  }
+  },
 
+
+  Delete: async (req, res) => {
+    const commentId = req.params.id;
+    await Comment.findByIdAndDelete(commentId).exec((err, id) => {
+      const token = TokenGenerator.jsonwebtoken(req.user_id);
+      res.status(200).json({ message: "OK", token: token });
+    });
+  },
 };
 
 module.exports = CommentsController;

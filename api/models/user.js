@@ -10,13 +10,13 @@ const UserSchema = new mongoose.Schema({
       type: mongoose.Schema.Types.ObjectId,
       ref: "Comment",
     },
-  ], 
+  ],
   friends_array: [
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
     },
-  ]
+  ],
 });
 
 const User = mongoose.model("User", UserSchema);
