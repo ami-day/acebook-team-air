@@ -9,7 +9,7 @@ In this group project we were tasked with taking on an existing codebase for a s
 A significant part of the work included familiairising ourselves with the codebase we inherited and learning and implementing new languages and frameworks within a timeframe of two weeks.</p>
 
 <p align="center">
-We also focused heavily on styling to make the app more interactive and "user friendly".
+We also focused heavily on adding styling to make the app more interactive and "user friendly".
 </p>
 
 ## Our Team
