@@ -1,20 +1,29 @@
-# Acebook
+<h1 align="center">
+ Acebook - Team Air
+</h1>
 
-In this project, you are tasked with working on an existing application. A significant part of the challenge will be to familiarise yourself with the codebase you've inherited, as you work to **improve and extend** it.
+<p align="center">
+In this group project we were tasked with taking on an existing codebase for a social media app "Acebook" and extending and improving on both the frontend and backend of the app to include new features. A significant part of the work included familiairising ourselves with the codebase we inherited and learning and implementing new languages and frameworks within a timeframe of two weeks. We also focused heavily on styling to make the app more interactive and "user friendly".
+</p>
 
-## Documentation
+## Our Team
+* **[Ami Day](https://github.com/ami-day)**
+* **[Khalifa Fadel](https://github.com/kmf0208)**
+* **[Rickie Patrick](https://github.com/1sAndZeros)**
+* **[Sarah Ellis](https://github.com/cloud-spotter)**
+* **[Tom Wheelan](https://github.com/TWhela)
 
-[More documentation of the codebase and its architecture can be found here.](./DOCUMENTATION.md) It's recommended you all read this _after making sure the whole setup below worked for everyone_. Then work together on a diagram describing how the application works.
+## Tech stack
 
-[A template Miro board for your diagrams can be found here.](https://miro.com/app/board/uXjVPqNzFfc=/?share_link_id=360271550320) Make sure your validate your diagrams with your coach.
+**Frontend:**
+<img src="https://img.shields.io/badge/Javascript-yellow?logo=javascript"> <img src="https://img.shields.io/badge/HTML-orange?logo=HTML"> <img src="https://img.shields.io/badge/CSS-blue?logo=CSS"> <img src="https://img.shields.io/badge/React-grey?logo=React">
 
-## Card wall
+**Backend:**
+<img src="https://img.shields.io/badge/MongoDB-green?logo=MongoDB"> <img src="https://img.shields.io/badge/Express-black?logo=Express"> <img src="https://img.shields.io/badge/Node-darkgreen?logo=Node">
 
-[Trello Board can be found here](https://trello.com/b/BxeQZLmW/team-air-acebook-project)
+## Running the App
 
-## Quickstart
-
-### Install Node.js
+### Installing Node.js
 
 1. Install Node Version Manager (NVM)
    ```
@@ -27,34 +36,26 @@ In this project, you are tasked with working on an existing application. A signi
    nvm install 18
    ```
 
-### Set up your project
+### Project set-up
 
-1. Fork this repository
-2. Rename your fork to `acebook-<team name>`
-3. Clone your fork to your local machine
-4. Install Node.js dependencies for both the `frontend` and `api` directories.
+1. Install Node.js dependencies for both the `frontend` and `api` directories.
    ```
    ; cd api
    ; npm install
    ; cd ../frontend
    ; npm install
    ```
-
-> You might get warning messages about the installed dependencies at this point. You can ignore them, as long as the installation process doesn't fail. If the setup fails at this point, don't wait for too long and reach out to your coach.
-
-5. Install an ESLint plugin for your editor. For example: [`linter-eslint`](https://github.com/AtomLinter/linter-eslint) for Atom.
-6. Install MongoDB
+2. Install MongoDB
    ```
    brew tap mongodb/brew
    brew install mongodb-community@5.0
    ```
-   *Note:* If you see a message that says `If you need to have mongodb-community@5.0 first in your PATH, run:`, follow the instruction. Restart your terminal after this.
-7. Start MongoDB
+3. Start MongoDB
    ```
    brew services start mongodb-community@5.0
    ```
 
-### How to run the server and use the app (as a human)
+### Running thr server
 
 1. Start the server application (in the `api` directory)
 
@@ -74,10 +75,6 @@ In this project, you are tasked with working on an existing application. A signi
   ```
 
 You should now be able to open your browser and go to `http://localhost:3000/signup` to create a new user.
-
-Then, after signing up, you should be able to log in by going to `http://localhost:3000/login`.
-
-After logging in, you won't see much but you can create posts using PostMan and they should then show up in the browser if you refresh the page.
 
 ### How to run automated tests
 
@@ -126,24 +123,3 @@ Then run the tests in a new terminal session
 
 ; JWT_SECRET=f6d278bb34e1d0e146a80b16ec254c05 npm run test
 ```
-
-## MongoDB Connection Errors?
-
-Some people occasionally experience MongoDB connection errors when running the tests or trying to use the application. Here are some tips which might help resolve such issues.
-
-- Check that MongoDB is installed using `mongo --version`
-- Check that it's running using `brew services list`
-
-If you have issues that are not resolved by these tips, please reach out to a coach and, once the issue is resolved, we can add a new tip!
-
-
-
-<!-- BEGIN GENERATED SECTION DO NOT EDIT -->
-
----
-
-**How was this resource?**  
-[😫](https://airtable.com/shrUJ3t7KLMqVRFKR?prefill_Repository=makersacademy%2Facebook-mern-template&prefill_File=README.md&prefill_Sentiment=😫) [😕](https://airtable.com/shrUJ3t7KLMqVRFKR?prefill_Repository=makersacademy%2Facebook-mern-template&prefill_File=README.md&prefill_Sentiment=😕) [😐](https://airtable.com/shrUJ3t7KLMqVRFKR?prefill_Repository=makersacademy%2Facebook-mern-template&prefill_File=README.md&prefill_Sentiment=😐) [🙂](https://airtable.com/shrUJ3t7KLMqVRFKR?prefill_Repository=makersacademy%2Facebook-mern-template&prefill_File=README.md&prefill_Sentiment=🙂) [😀](https://airtable.com/shrUJ3t7KLMqVRFKR?prefill_Repository=makersacademy%2Facebook-mern-template&prefill_File=README.md&prefill_Sentiment=😀)  
-Click an emoji to tell us.
-
-<!-- END GENERATED SECTION DO NOT EDIT -->
