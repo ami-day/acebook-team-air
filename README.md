@@ -12,7 +12,7 @@ A significant part of the work included familiairising ourselves with the codeba
 We also focused heavily on adding styling to make the app more interactive and "user friendly".
 </p>
 
-## Our Team
+## Our Team 
 * **[Ami Day](https://github.com/ami-day)**
 * **[Khalifa Fadel](https://github.com/kmf0208)**
 * **[Rickie Patrick](https://github.com/1sAndZeros)**
