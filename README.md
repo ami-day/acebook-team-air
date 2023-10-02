@@ -17,7 +17,7 @@ We also focused heavily on adding styling to make the app more interactive and "
 * **[Khalifa Fadel](https://github.com/kmf0208)**
 * **[Rickie Patrick](https://github.com/1sAndZeros)**
 * **[Cloud Spotter](https://github.com/cloud-spotter)**
-* **[Tom Wheelan](https://github.com/TWhela)**
+* **[Tom Whelan](https://github.com/TWhela)**
 
 ## Tech stack
 
