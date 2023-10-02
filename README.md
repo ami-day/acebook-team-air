@@ -15,7 +15,7 @@ We also focused heavily on adding styling to make the app more interactive and "
 ## Our Team 
 * **[Ami Day](https://github.com/ami-day)**
 * **[Khalifa Fadel](https://github.com/kmf0208)**
-* **[Rickie Patrick](https://github.com/1sAndZeros)**
+* **[Rikie Patrick](https://github.com/1sAndZeros)**
 * **[Cloud Spotter](https://github.com/cloud-spotter)**
 * **[Tom Whelan](https://github.com/TWhela)**
 
