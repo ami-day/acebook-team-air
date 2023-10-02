@@ -16,7 +16,7 @@ We also focused heavily on adding styling to make the app more interactive and "
 * **[Ami Day](https://github.com/ami-day)**
 * **[Khalifa Fadel](https://github.com/kmf0208)**
 * **[Rickie Patrick](https://github.com/1sAndZeros)**
-* **[Sarah Ellis](https://github.com/cloud-spotter)**
+* **[Cloud Spotter](https://github.com/cloud-spotter)**
 * **[Tom Wheelan](https://github.com/TWhela)**
 
 ## Tech stack
